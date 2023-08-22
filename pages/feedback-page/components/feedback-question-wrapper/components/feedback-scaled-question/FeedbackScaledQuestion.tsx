@@ -56,7 +56,7 @@ const FeedbackScaledQuestion = React.forwardRef<
     };
 
     return (
-      <TouchableWithoutFeedback onPress={onPress}>
+      <TouchableWithoutFeedback onPress={onPress} key={answer.toString()}>
         <View style={style.answerContainer}>
           <View
             style={[

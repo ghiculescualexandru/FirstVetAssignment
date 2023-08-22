@@ -95,6 +95,11 @@ const FeedbackPage = ({
     );
   }, [buttonState, requestStatus, questions]);
 
+  const keyExtractor = React.useCallback(
+    (item: QuestionModel) => `feedback-page-list-item-${item.questionId}`,
+    []
+  );
+
   return (
     <FlatList
       contentContainerStyle={style.listContentContainer}
@@ -103,6 +108,7 @@ const FeedbackPage = ({
       ListHeaderComponent={listHeader}
       ListFooterComponent={listFooter}
       ListEmptyComponent={listEmpty}
+      keyExtractor={keyExtractor}
       automaticallyAdjustKeyboardInsets={true}
     />
   );

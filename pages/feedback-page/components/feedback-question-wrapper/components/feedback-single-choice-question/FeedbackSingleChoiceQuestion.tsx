@@ -57,13 +57,15 @@ const FeedbackSingleChoiceQuestion = React.forwardRef<
     };
 
     return (
-      <SelectableRow
-        text={answer.text}
-        onPress={onPress}
-        selected={isSelected}
-        selectionType={"radio-button"}
-        containerStyle={style.answerContainer}
-      />
+      <View key={answer.id.toString()}>
+        <SelectableRow
+          text={answer.text}
+          onPress={onPress}
+          selected={isSelected}
+          selectionType={"radio-button"}
+          containerStyle={style.answerContainer}
+        />
+      </View>
     );
   };
 

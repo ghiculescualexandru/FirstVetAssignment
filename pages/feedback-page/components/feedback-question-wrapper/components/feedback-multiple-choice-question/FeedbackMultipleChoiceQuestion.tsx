@@ -86,13 +86,15 @@ const FeedbackMultipleChoiceQuestion = React.forwardRef<
     };
 
     return (
-      <SelectableRow
-        text={answer.text}
-        onPress={onPress}
-        selected={isSelected}
-        selectionType={"checkbox"}
-        containerStyle={style.answerContainer}
-      />
+      <View key={answer.id.toString()}>
+        <SelectableRow
+          text={answer.text}
+          onPress={onPress}
+          selected={isSelected}
+          selectionType={"checkbox"}
+          containerStyle={style.answerContainer}
+        />
+      </View>
     );
   };
 
