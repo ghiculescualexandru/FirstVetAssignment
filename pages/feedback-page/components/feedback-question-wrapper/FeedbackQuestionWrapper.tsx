@@ -12,6 +12,9 @@ import FeedbackMultipleChoiceQuestion from "./components/feedback-multiple-choic
 import FeedbackSingleChoiceQuestion from "./components/feedback-single-choice-question/FeedbackSingleChoiceQuestion";
 import FeedbackScaledQuestion from "./components/feedback-scaled-question/FeedbackScaledQuestion";
 import FreeTextQuestion from "./components/free-text-question/FreeTextQuestion";
+import BaseCard from "../../../../components/base-card/BaseCard";
+import { style } from "./styles";
+import FeedbackQuestionTitle from "./components/feedback-question-title/FeedbackQuestionTitle";
 
 interface FeedbackQuestionWrapperProps {
   question: QuestionModel;
@@ -26,7 +29,7 @@ const FeedbackQuestionWrapper = ({
   markQuestionAsUnDone,
   questionRef,
 }: FeedbackQuestionWrapperProps) => {
-  const questionComponent = React.useMemo(() => {
+  const answersComponent = React.useMemo(() => {
     switch (question.type) {
       case "multiple-choice":
         return (
@@ -76,17 +79,16 @@ const FeedbackQuestionWrapper = ({
     }
   }, [question]);
 
+  const questionComponent = (
+    <View>
+      <FeedbackQuestionTitle title={question.questionText} />
+      {answersComponent}
+    </View>
+  );
+
   return (
-    <View
-      // key={extractedKey}
-      style={{
-        height: 100,
-        width: "100%",
-        marginVertical: 16,
-        backgroundColor: "pink",
-      }}
-    >
-      {questionComponent}
+    <View style={style.cardContainer}>
+      <BaseCard>{questionComponent}</BaseCard>
     </View>
   );
 };

@@ -6,6 +6,7 @@ import {
   MultipleChoiceQuestionAnswerModel,
   QuestionModel,
 } from "../../../../../../models/question.models";
+import FeedbackQuestionClearCta from "../feedback-question-clear-cta/FeedbackQuestionClearCta";
 
 interface FeedbackMultipleChoiceQuestionProps {
   question: MultipleChoiceQuestionModel;
@@ -30,6 +31,12 @@ const FeedbackMultipleChoiceQuestion = React.forwardRef<
     }),
     [selectedAnswers]
   );
+
+  // Used when the user taps the clear selection button
+  const onClear = () => {
+    setSelectedAnswers(undefined);
+    markQuestionAsUnDone(question);
+  };
 
   const renderAnswer = ({
     answer,
@@ -87,8 +94,8 @@ const FeedbackMultipleChoiceQuestion = React.forwardRef<
 
   return (
     <View style={{}}>
-      <Text>{question.questionText}</Text>
       {question.answers.map((answer) => renderAnswer({ answer }))}
+      <FeedbackQuestionClearCta onPress={onClear} />
     </View>
   );
 });

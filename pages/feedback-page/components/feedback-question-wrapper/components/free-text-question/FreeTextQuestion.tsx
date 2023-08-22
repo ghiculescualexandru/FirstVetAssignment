@@ -43,7 +43,6 @@ const FreeTextQuestion = React.forwardRef<
 
   return (
     <View style={{}}>
-      <Text>{question.questionText}</Text>
       {/* [TODO TO DO] adauga in modele sa poti sa il lasi sau nu gol
       si sa il blocheze sau nu pe user daca nu il completeaza */}
       {/* [TODO] If I have time, handle list when keyboard occurs */}

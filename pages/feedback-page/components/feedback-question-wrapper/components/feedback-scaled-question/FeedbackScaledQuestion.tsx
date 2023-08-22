@@ -56,7 +56,6 @@ const FeedbackScaledQuestion = React.forwardRef<
 
   return (
     <View style={{}}>
-      <Text>{question.questionText}</Text>
       <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
         {question.answers.map((answer) => renderAnswer({ answer }))}
       </View>

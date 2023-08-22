@@ -1,34 +1,33 @@
 import { StyleSheet, ViewStyle, TextStyle } from "react-native";
 import { borderRadius } from "../../theme/borderRadius";
 import { colors } from "../../theme/colors";
-
-const BUTTON_SIZE = {
-  width: 200,
-  height: 36,
-};
+import { spacing } from "../../theme/spacing";
 
 interface Style {
   container: ViewStyle;
-  disabledContainer: ViewStyle;
+  selectedContainer: ViewStyle;
+  selectionComponentContainer: ViewStyle;
   text: TextStyle;
 }
 
 const createStyleSheet = () => {
   return StyleSheet.create<Style>({
     container: {
-      width: BUTTON_SIZE.width,
-      height: BUTTON_SIZE.height,
-      justifyContent: "center",
+      width: "100%",
+      flexDirection: "row",
+      justifyContent: "flex-start",
       alignItems: "center",
+      padding: spacing.m,
       borderRadius: borderRadius.small,
-      backgroundColor: colors.button.background,
+      borderWidth: 1,
+      borderColor: colors.selection.notSelected,
     },
-    disabledContainer: {
-      backgroundColor: colors.button.disabledBackground,
+    selectedContainer: {
+      borderColor: colors.selection.selected,
     },
-    text: {
-      color: colors.text.inverted,
-      fontSize: 20,
+    text: {},
+    selectionComponentContainer: {
+      marginRight: spacing.xs,
     },
   });
 };

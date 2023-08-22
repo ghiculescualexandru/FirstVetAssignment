@@ -1,11 +1,14 @@
 import React from "react";
 import { View, Text, TouchableWithoutFeedback } from "react-native";
+import SelectableRow from "../../../../../../components/selectable-row/SelectableRow";
 import {
   SingleChoiceQuestionAnswered,
   SingleChoiceQuestionModel,
   SingleChoiceQuestionAnswerModel,
   QuestionModel,
 } from "../../../../../../models/question.models";
+import FeedbackQuestionClearCta from "../feedback-question-clear-cta/FeedbackQuestionClearCta";
+import { style } from "./styles";
 
 interface FeedbackSingleChoiceQuestionProps {
   question: SingleChoiceQuestionModel;
@@ -32,6 +35,12 @@ const FeedbackSingleChoiceQuestion = React.forwardRef<
     [selectedAnswer]
   );
 
+  // Used when the user taps the clear selection button
+  const onClear = () => {
+    setSelectedAnswer(undefined);
+    markQuestionAsUnDone(question);
+  };
+
   const renderAnswer = ({
     answer,
   }: {
@@ -47,18 +56,20 @@ const FeedbackSingleChoiceQuestion = React.forwardRef<
     };
 
     return (
-      <TouchableWithoutFeedback onPress={onPress}>
-        <Text style={{ backgroundColor: isSelected ? "cyan" : undefined }}>
-          {answer.text}
-        </Text>
-      </TouchableWithoutFeedback>
+      <SelectableRow
+        text={answer.text}
+        onPress={onPress}
+        selected={isSelected}
+        selectionType={"radio-button"}
+        containerStyle={style.answerContainer}
+      />
     );
   };
 
   return (
-    <View style={{}}>
-      <Text>{question.questionText}</Text>
+    <View>
       {question.answers.map((answer) => renderAnswer({ answer }))}
+      <FeedbackQuestionClearCta onPress={onClear} />
     </View>
   );
 });

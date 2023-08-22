@@ -13,7 +13,7 @@ const FeedbackPage = ({ navigation }: { navigation: any }) => {
 
   const {
     buttonState,
-    updateButtonState,
+    // updateButtonState,
     markQuestionAsDone,
     markQuestionAsUnDone,
   } = useFeedbackPageFooterState({ numberOfQuestions: questions.length });
@@ -27,7 +27,6 @@ const FeedbackPage = ({ navigation }: { navigation: any }) => {
       }}
       style={{}}
     >
-      <Text>Home Screen</Text>
       {/* [TODO] If i have time, change this to flat list */}
       {questions.map((question) => {
         return (

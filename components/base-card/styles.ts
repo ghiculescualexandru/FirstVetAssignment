@@ -1,34 +1,22 @@
 import { StyleSheet, ViewStyle, TextStyle } from "react-native";
 import { borderRadius } from "../../theme/borderRadius";
 import { colors } from "../../theme/colors";
-
-const BUTTON_SIZE = {
-  width: 200,
-  height: 36,
-};
+import { spacing } from "../../theme/spacing";
 
 interface Style {
   container: ViewStyle;
-  disabledContainer: ViewStyle;
-  text: TextStyle;
 }
 
 const createStyleSheet = () => {
   return StyleSheet.create<Style>({
     container: {
-      width: BUTTON_SIZE.width,
-      height: BUTTON_SIZE.height,
+      width: "100%",
       justifyContent: "center",
-      alignItems: "center",
+      padding: spacing.m,
       borderRadius: borderRadius.small,
-      backgroundColor: colors.button.background,
-    },
-    disabledContainer: {
-      backgroundColor: colors.button.disabledBackground,
-    },
-    text: {
-      color: colors.text.inverted,
-      fontSize: 20,
+      backgroundColor: colors.surfaces.underground,
+      borderWidth: 1,
+      borderColor: colors.text.secondary,
     },
   });
 };
