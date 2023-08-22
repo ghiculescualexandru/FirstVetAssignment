@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import RadioButton from "../radio-button/RadioButton";
 import { style } from "./styles";
+import Checkbox from "../checkbox/Checkbox";
 
 interface SelectableRowProps {
   selectionType: "radio-button" | "checkbox";
@@ -30,6 +31,8 @@ const SelectableRow = ({
       selectionComponent:
         selectionType === "radio-button" ? (
           <RadioButton selected={selected} />
+        ) : selectionType === "checkbox" ? (
+          <Checkbox selected={selected} />
         ) : null,
     };
   }, [selected, selectionType]);
@@ -37,9 +40,11 @@ const SelectableRow = ({
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={[style.container, containerBySelected, containerStyle]}>
-        <View style={style.selectionComponentContainer}>
-          {selectionComponent}
-        </View>
+        {selectionComponent ? (
+          <View style={style.selectionComponentContainer}>
+            {selectionComponent}
+          </View>
+        ) : null}
         <Text style={style.text}>{text}</Text>
       </View>
     </TouchableWithoutFeedback>

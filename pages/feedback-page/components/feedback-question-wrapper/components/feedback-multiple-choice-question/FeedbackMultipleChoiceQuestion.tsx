@@ -7,6 +7,8 @@ import {
   QuestionModel,
 } from "../../../../../../models/question.models";
 import FeedbackQuestionClearCta from "../../../feedback-question-clear-cta/FeedbackQuestionClearCta";
+import SelectableRow from "../../../../../../components/selectable-row/SelectableRow";
+import { style } from "./styles";
 
 interface FeedbackMultipleChoiceQuestionProps {
   question: MultipleChoiceQuestionModel;
@@ -45,7 +47,8 @@ const FeedbackMultipleChoiceQuestion = React.forwardRef<
   }) => {
     // Mark as selected if the answer id matches
     // the selected answer id
-    const isSelected = selectedAnswers?.find((val) => val.id === answer.id);
+    const isSelected =
+      selectedAnswers?.find((val) => val.id === answer.id) !== undefined;
     // On press, update the state
     const onPress = () => {
       if (isSelected) {
@@ -84,11 +87,13 @@ const FeedbackMultipleChoiceQuestion = React.forwardRef<
     };
 
     return (
-      <TouchableWithoutFeedback onPress={onPress}>
-        <Text style={{ backgroundColor: isSelected ? "cyan" : undefined }}>
-          {answer.text}
-        </Text>
-      </TouchableWithoutFeedback>
+      <SelectableRow
+        text={answer.text}
+        onPress={onPress}
+        selected={isSelected}
+        selectionType={"checkbox"}
+        containerStyle={style.answerContainer}
+      />
     );
   };
 

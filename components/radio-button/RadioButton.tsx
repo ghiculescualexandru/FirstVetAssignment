@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  ViewStyle,
-  StyleProp,
-} from "react-native";
+import { View, ViewStyle, StyleProp } from "react-native";
 import { style } from "./styles";
 
 interface RadioButtonProps {
