@@ -45,7 +45,7 @@ const SelectableRow = ({
             {selectionComponent}
           </View>
         ) : null}
-        <Text>{text}</Text>
+        <Text style={style.text}>{text}</Text>
       </View>
     </TouchableWithoutFeedback>
   );

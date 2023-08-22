@@ -7,6 +7,7 @@ interface Style {
   container: ViewStyle;
   selectedContainer: ViewStyle;
   selectionComponentContainer: ViewStyle;
+  text: TextStyle;
 }
 
 const createStyleSheet = () => {
@@ -26,6 +27,9 @@ const createStyleSheet = () => {
     },
     selectionComponentContainer: {
       marginRight: spacing.xs,
+    },
+    text: {
+      flex: 1,
     },
   });
 };
