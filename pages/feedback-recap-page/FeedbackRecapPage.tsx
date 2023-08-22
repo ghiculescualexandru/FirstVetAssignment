@@ -15,7 +15,7 @@ const FeedbackRecapPage = ({
   route,
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "FeedbackRecap">) => {
-  const questionsAnswered = route.params.questionsAnswered;
+  const { questionsAnswered, id } = route.params;
 
   const [buttonStatus, setButtonStatus] =
     React.useState<ButtonStatus>("enabled");
@@ -27,7 +27,7 @@ const FeedbackRecapPage = ({
     const answersToSend = normalizeQuestionsAnsweredToApi(questionsAnswered);
     // Send data to server
     QuestionService.sendFeedbackAnswers({
-      id: 0,
+      id,
       answersToSend,
     })
       .then(() => {

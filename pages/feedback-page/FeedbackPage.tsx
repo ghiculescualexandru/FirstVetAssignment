@@ -31,7 +31,10 @@ const FeedbackPage = ({
     // Get the questions answers
     const questionsAnswered = getQuestionsAnsweredData();
     // Navigate to the recap page, while passing the answers
-    navigation.navigate("FeedbackRecap", { questionsAnswered });
+    navigation.navigate("FeedbackRecap", {
+      questionsAnswered,
+      id: route.params.id,
+    });
   };
 
   const renderListItem = ({ item }: { item: QuestionModel }) => {
