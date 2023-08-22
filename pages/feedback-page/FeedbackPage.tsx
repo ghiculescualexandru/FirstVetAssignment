@@ -7,6 +7,7 @@ import FeedbackFooter from "./components/feedback-footer/FeedbackFooter";
 import FeedbackQuestionWrapper from "./components/feedback-question-wrapper/FeedbackQuestionWrapper";
 import { useFeedbackPageFooterState } from "./hooks/useFeedbackPageFooterState";
 import { useFetchFeedbackPage } from "./hooks/useFetchFeedbackPage";
+import { style } from "./styles";
 
 const FeedbackPage = ({ navigation }: { navigation: any }) => {
   const { questions, questionsAnswered } = useFetchFeedbackPage({ id: 1 });
@@ -20,12 +21,8 @@ const FeedbackPage = ({ navigation }: { navigation: any }) => {
 
   return (
     <ScrollView
-      contentContainerStyle={{
-        alignItems: "center",
-        justifyContent: "center",
-        paddingBottom: 300, // Add screen height here
-      }}
-      style={{}}
+      contentContainerStyle={style.listContentContainer}
+      automaticallyAdjustKeyboardInsets={true}
     >
       {/* [TODO] If i have time, change this to flat list */}
       {questions.map((question) => {

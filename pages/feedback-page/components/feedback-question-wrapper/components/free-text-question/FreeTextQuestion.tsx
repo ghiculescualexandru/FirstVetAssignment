@@ -5,6 +5,9 @@ import {
   FreeTextQuestionModel,
   FreeTextQuestionAnswered,
 } from "../../../../../../models/question.models";
+import { colors } from "../../../../../../theme/colors";
+import FeedbackQuestionClearCta from "../../../feedback-question-clear-cta/FeedbackQuestionClearCta";
+import { style } from "./styles";
 
 interface FreeTextQuestionProps {
   question: FreeTextQuestionModel;
@@ -30,6 +33,12 @@ const FreeTextQuestion = React.forwardRef<
     [selectedAnswer]
   );
 
+  // Used when the user taps the clear selection button
+  const onClear = () => {
+    setSelectedAnswer(undefined);
+    markQuestionAsUnDone(question);
+  };
+
   const onChangeText = (newText: string) => {
     // Update the state
     setSelectedAnswer(newText);
@@ -42,11 +51,21 @@ const FreeTextQuestion = React.forwardRef<
   };
 
   return (
-    <View style={{}}>
+    <View>
       {/* [TODO TO DO] adauga in modele sa poti sa il lasi sau nu gol
       si sa il blocheze sau nu pe user daca nu il completeaza */}
       {/* [TODO] If I have time, handle list when keyboard occurs */}
-      <TextInput value={selectedAnswer} onChangeText={onChangeText}></TextInput>
+      <TextInput
+        value={selectedAnswer}
+        onChangeText={onChangeText}
+        style={style.textInput}
+        placeholder={"Write here..."}
+        placeholderTextColor={colors.text.secondary}
+        blurOnSubmit={false}
+        returnKeyType={"done"}
+        multiline={true}
+      />
+      <FeedbackQuestionClearCta onPress={onClear} />
     </View>
   );
 });
