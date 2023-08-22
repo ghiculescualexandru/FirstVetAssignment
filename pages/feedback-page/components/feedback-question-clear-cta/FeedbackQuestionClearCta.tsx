@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, TouchableWithoutFeedback } from "react-native";
+import { View, Text, TouchableHighlight } from "react-native";
 import { COMMON_STRINGS } from "../../../../strings/strings.common";
 import { style } from "./styles";
+import { colors } from "../../../../theme/colors";
 
 const X_ICON = "X";
 
@@ -14,9 +15,9 @@ const FeedbackQuestionClearCta = ({
 }: FeedbackQuestionClearCtaProps) => {
   return (
     <View style={style.container}>
-      <TouchableWithoutFeedback onPress={onPress}>
+      <TouchableHighlight onPress={onPress} underlayColor={colors.transparent}>
         <Text style={style.text}>{`${COMMON_STRINGS.clear} ${X_ICON}`}</Text>
-      </TouchableWithoutFeedback>
+      </TouchableHighlight>
     </View>
   );
 };
