@@ -100,6 +100,11 @@ const MOCKS = [
       question_id: 6,
       question_text: "How did the consultation go (step by step)?",
     },
+    {
+      type: "date-choice",
+      question_id: 7,
+      question_text: "When do you propose to make another appointment?",
+    },
   ],
   [
     {

@@ -9,6 +9,7 @@ import BaseCard from "../../../../components/base-card/BaseCard";
 import { style } from "./styles";
 import FeedbackQuestionTitle from "../feedback-question-title/FeedbackQuestionTitle";
 import { QuestionAnsweredRef } from "../../utils/interfaces";
+import FeedbackDateChoiceQuestion from "./components/feedback-date-choice-question/FeedbackDateChoiceQuestion";
 
 interface FeedbackQuestionWrapperProps {
   question: QuestionModel;
@@ -55,6 +56,15 @@ const FeedbackQuestionWrapper = ({
       case "free-text":
         return (
           <FreeTextQuestion
+            question={question}
+            markQuestionAsCompleted={markQuestionAsCompleted}
+            markQuestionAsNotCompleted={markQuestionAsNotCompleted}
+            ref={questionRef}
+          />
+        );
+      case "date-choice":
+        return (
+          <FeedbackDateChoiceQuestion
             question={question}
             markQuestionAsCompleted={markQuestionAsCompleted}
             markQuestionAsNotCompleted={markQuestionAsNotCompleted}

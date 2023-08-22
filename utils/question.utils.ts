@@ -27,6 +27,7 @@ const normalizeQuestionAnswers = (question: QuestionApiResponse) => {
     case "scaled-choice":
       return question.answers;
     case "free-text":
+    case "date-choice":
     default:
       return [];
   }

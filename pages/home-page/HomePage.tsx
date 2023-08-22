@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { BaseButton } from "../../components/base-button/BaseButton";
 import { RootStackParamList } from "../../navigation/navigation.models";
 import { style } from "./styles";

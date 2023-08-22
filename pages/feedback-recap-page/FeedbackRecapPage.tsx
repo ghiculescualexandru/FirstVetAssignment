@@ -56,6 +56,8 @@ const FeedbackRecapPage = ({
         return item.selectedAnswer?.toString();
       case "single-choice":
         return item.selectedAnswer?.text;
+      case "date-choice":
+        return item.selectedAnswer;
       default:
         return "";
     }
