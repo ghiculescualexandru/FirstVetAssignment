@@ -6,6 +6,8 @@ import {
   ScaledChoiceQuestionModel,
   ScaledChoiceQuestionAnswered,
 } from "../../../../../../models/question.models";
+import FeedbackQuestionClearCta from "../../../feedback-question-clear-cta/FeedbackQuestionClearCta";
+import { style } from "./styles";
 
 interface FeedbackScaledQuestionProps {
   question: ScaledChoiceQuestionModel;
@@ -31,6 +33,12 @@ const FeedbackScaledQuestion = React.forwardRef<
     [selectedAnswer]
   );
 
+  // Used when the user taps the clear selection button
+  const onClear = () => {
+    setSelectedAnswer(undefined);
+    markQuestionAsUnDone(question);
+  };
+
   const renderAnswer = ({
     answer,
   }: {
@@ -38,7 +46,7 @@ const FeedbackScaledQuestion = React.forwardRef<
   }) => {
     // Mark as selected if the answer is
     // the same as the selected te answer
-    const isSelected = answer === selectedAnswer;
+    const isSelected = selectedAnswer ? answer <= selectedAnswer : false;
     // On press, update the state and mark the question as done
     const onPress = () => {
       setSelectedAnswer(answer);
@@ -47,18 +55,25 @@ const FeedbackScaledQuestion = React.forwardRef<
 
     return (
       <TouchableWithoutFeedback onPress={onPress}>
-        <Text style={{ backgroundColor: isSelected ? "cyan" : undefined }}>
-          {answer}
-        </Text>
+        <View style={style.answerContainer}>
+          <View
+            style={[
+              style.scaleCircle,
+              isSelected ? style.selectedScaleCircle : undefined,
+            ]}
+          />
+          <Text>{answer}</Text>
+        </View>
       </TouchableWithoutFeedback>
     );
   };
 
   return (
-    <View style={{}}>
-      <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+    <View>
+      <View style={style.scaleContainer}>
         {question.answers.map((answer) => renderAnswer({ answer }))}
       </View>
+        <FeedbackQuestionClearCta onPress={onClear} />
     </View>
   );
 });
