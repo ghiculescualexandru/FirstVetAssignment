@@ -1,23 +1,23 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
-import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
-import { BaseButton } from "../../components/base-button/BaseButton";
-import { QuestionModel, QuestionAnswered } from "../../models/question.models";
+import { ActivityIndicator, FlatList, Text, View } from "react-native";
+import { QuestionModel } from "../../models/question.models";
 import { RootStackParamList } from "../../navigation/navigation.models";
-import { fetchFeedbackPageById } from "../../services/question.service";
 import FeedbackFooter from "./components/feedback-footer/FeedbackFooter";
 import FeedbackQuestionWrapper from "./components/feedback-question-wrapper/FeedbackQuestionWrapper";
 import { useFeedbackPageFooterState } from "./hooks/useFeedbackPageFooterState";
 import { useFetchFeedbackPage } from "./hooks/useFetchFeedbackPage";
 import { style } from "./styles";
+import { COMMON_STRINGS } from "../../strings/strings.common";
 
 const FeedbackPage = ({
   navigation,
   route,
 }: NativeStackScreenProps<RootStackParamList, "Feedback">) => {
-  const { questions, questionsAnswered, resetAnswers } = useFetchFeedbackPage({
-    id: route.params.id,
-  });
+  const { questions, requestStatus, questionsAnswered, resetAnswers } =
+    useFetchFeedbackPage({
+      id: route.params.id,
+    });
 
   const {
     buttonState,
@@ -26,22 +26,49 @@ const FeedbackPage = ({
     markQuestionAsUnDone,
   } = useFeedbackPageFooterState({ numberOfQuestions: questions.length });
 
-  return (
-    <ScrollView
-      contentContainerStyle={style.listContentContainer}
-      automaticallyAdjustKeyboardInsets={true}
-    >
-      {/* [TODO] If i have time, change this to flat list */}
-      {questions.map((question) => {
+  const renderListItem = ({ item }: { item: QuestionModel }) => {
+    return (
+      <FeedbackQuestionWrapper
+        markQuestionAsDone={markQuestionAsDone}
+        markQuestionAsUnDone={markQuestionAsUnDone}
+        question={item}
+        questionRef={questionsAnswered[item.questionId]}
+      />
+    );
+  };
+
+  const listEmpty = React.useMemo(() => {
+    switch (requestStatus) {
+      case "initial-loading":
+      case "loading":
         return (
-          <FeedbackQuestionWrapper
-            markQuestionAsDone={markQuestionAsDone}
-            markQuestionAsUnDone={markQuestionAsUnDone}
-            question={question}
-            questionRef={questionsAnswered[question.questionId]}
-          />
+          <View style={style.loadingContainer}>
+            <ActivityIndicator style={style.loadingIndicator} />
+            <Text style={style.loadingText}>{COMMON_STRINGS.loading}</Text>
+          </View>
         );
-      })}
+      case "success":
+        return (
+          <Text style={style.loadingText}>{COMMON_STRINGS.nothingToSee}</Text>
+        );
+      case "failure":
+      default:
+        return (
+          <Text style={style.loadingText}>
+            {COMMON_STRINGS.somethingWentWrong}
+          </Text>
+        );
+    }
+  }, [requestStatus]);
+
+  const listFooter = React.useMemo(() => {
+    // Guard here, so we don't display the footer
+    // if something went wrong
+    if (requestStatus !== "success" || questions.length === 0) {
+      return null;
+    }
+
+    return (
       <FeedbackFooter
         state={buttonState}
         onContinuePress={() => {
@@ -49,7 +76,18 @@ const FeedbackPage = ({
         }}
         onResetPress={resetAnswers}
       />
-    </ScrollView>
+    );
+  }, [buttonState, requestStatus, questions]);
+
+  return (
+    <FlatList
+      contentContainerStyle={style.listContentContainer}
+      data={questions}
+      renderItem={renderListItem}
+      ListFooterComponent={listFooter}
+      ListEmptyComponent={listEmpty}
+      automaticallyAdjustKeyboardInsets={true}
+    />
   );
 };
 

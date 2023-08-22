@@ -28,6 +28,15 @@ const HomePage = ({
           });
         }}
       />
+      <BaseButton
+        text={"Go to form missing"}
+        containerStyle={style.buttonContainer}
+        onPress={() => {
+          navigation.navigate("Feedback", {
+            id: 999,
+          });
+        }}
+      />
     </View>
   );
 };

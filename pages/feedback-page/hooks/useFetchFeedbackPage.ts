@@ -72,6 +72,7 @@ export const useFetchFeedbackPage = ({ id }: { id: number }) => {
 
   return {
     questions: results.questions,
+    requestStatus: results.requestStatus,
     questionsAnswered: questionsAnsweredRefs.current,
     resetAnswers,
   };
