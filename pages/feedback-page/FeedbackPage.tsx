@@ -10,7 +10,9 @@ import { useFetchFeedbackPage } from "./hooks/useFetchFeedbackPage";
 import { style } from "./styles";
 
 const FeedbackPage = ({ navigation }: { navigation: any }) => {
-  const { questions, questionsAnswered } = useFetchFeedbackPage({ id: 1 });
+  const { questions, questionsAnswered, resetAnswers } = useFetchFeedbackPage({
+    id: 1,
+  });
 
   const {
     buttonState,
@@ -37,9 +39,10 @@ const FeedbackPage = ({ navigation }: { navigation: any }) => {
       })}
       <FeedbackFooter
         state={buttonState}
-        onPress={() => {
+        onContinuePress={() => {
           console.log(JSON.stringify(questionsAnswered, null, 1));
         }}
+        onResetPress={resetAnswers}
       />
     </ScrollView>
   );

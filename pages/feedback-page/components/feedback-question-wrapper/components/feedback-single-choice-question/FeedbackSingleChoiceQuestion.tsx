@@ -7,6 +7,7 @@ import {
   SingleChoiceQuestionAnswerModel,
   QuestionModel,
 } from "../../../../../../models/question.models";
+import { FeedbackQuestionForwardedRef } from "../../../../utils/interfaces";
 import FeedbackQuestionClearCta from "../../../feedback-question-clear-cta/FeedbackQuestionClearCta";
 import { style } from "./styles";
 
@@ -17,7 +18,7 @@ interface FeedbackSingleChoiceQuestionProps {
   markQuestionAsUnDone: (question: QuestionModel) => void;
 }
 const FeedbackSingleChoiceQuestion = React.forwardRef<
-  SingleChoiceQuestionAnswered,
+  SingleChoiceQuestionAnswered & FeedbackQuestionForwardedRef,
   FeedbackSingleChoiceQuestionProps
 >(({ question, markQuestionAsDone, markQuestionAsUnDone }, ref) => {
   // A single answer is required, so use directly the answer
@@ -25,21 +26,22 @@ const FeedbackSingleChoiceQuestion = React.forwardRef<
   const [selectedAnswer, setSelectedAnswer] =
     React.useState<SingleChoiceQuestionAnswerModel>();
 
+  // Used when the user taps the clear selection button
+  const onClear = () => {
+    setSelectedAnswer(undefined);
+    markQuestionAsUnDone(question);
+  };
+
   // Use imperative handling to update the source of truth in the parent
   React.useImperativeHandle(
     ref,
     () => ({
       selectedAnswer,
       question,
+      clearAnswers: onClear,
     }),
     [selectedAnswer]
   );
-
-  // Used when the user taps the clear selection button
-  const onClear = () => {
-    setSelectedAnswer(undefined);
-    markQuestionAsUnDone(question);
-  };
 
   const renderAnswer = ({
     answer,

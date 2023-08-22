@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { TouchableHighlight, View, Text } from "react-native";
 import { BaseButton } from "../../../../components/base-button/BaseButton";
 import { COMMON_STRINGS } from "../../../../strings/strings.common";
 import { ButtonStatus } from "../../../../types/global.types";
@@ -7,17 +7,37 @@ import { style } from "./styles";
 
 interface FeedbackFooterProps {
   state: ButtonStatus;
-  onPress: () => void;
+  onContinuePress: () => void;
+  onResetPress: () => void;
 }
 
-const FeedbackFooter = ({ state, onPress }: FeedbackFooterProps) => {
+const FeedbackFooter = ({
+  state,
+  onContinuePress,
+  onResetPress,
+}: FeedbackFooterProps) => {
+  const continueButton = (
+    <BaseButton
+      onPress={onContinuePress}
+      text={COMMON_STRINGS.continue}
+      status={state}
+    />
+  );
+
+  const resetButton = (
+    <TouchableHighlight
+      onPress={onResetPress}
+      style={style.resetButtonContainer}
+      underlayColor={"transparent"}
+    >
+      <Text style={style.resetButtonText}>{COMMON_STRINGS.reset}</Text>
+    </TouchableHighlight>
+  );
+
   return (
     <View style={style.container}>
-      <BaseButton
-        onPress={onPress}
-        text={COMMON_STRINGS.continue}
-        status={state}
-      />
+      {continueButton}
+      {resetButton}
     </View>
   );
 };

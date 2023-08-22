@@ -6,6 +6,10 @@ import {
 import { fetchFeedbackPageById } from "../../../services/question.service";
 import { RequestStatus } from "../../../types/global.types";
 import { normalizeQuestions } from "../../../utils/question.utils";
+import {
+  AnsweredQuestionRef,
+  FeedbackQuestionForwardedRef,
+} from "../utils/interfaces";
 
 export const useFetchFeedbackPage = ({ id }: { id: number }) => {
   // The questions will be updated into a state, so that the page
@@ -22,7 +26,7 @@ export const useFetchFeedbackPage = ({ id }: { id: number }) => {
   // This is the source of truth for the page, which will be passed as data
   // when making the API call for the response
   const questionsAnsweredRefs = React.useRef<
-    Record<number, React.RefObject<QuestionAnswered>>
+    Record<number, React.RefObject<AnsweredQuestionRef>>
   >({});
 
   // Main function which fetches all data for the page
@@ -37,7 +41,7 @@ export const useFetchFeedbackPage = ({ id }: { id: number }) => {
       // Create source of truth
       normalizedData.map((question) => {
         questionsAnsweredRefs.current[question.questionId] =
-          React.createRef<QuestionAnswered>();
+          React.createRef<AnsweredQuestionRef>();
       });
       // Update state
       setResults({
@@ -53,6 +57,14 @@ export const useFetchFeedbackPage = ({ id }: { id: number }) => {
     }
   };
 
+  // Used to reset the source of truth while
+  // resetting each card answers at the same time
+  const resetAnswers = () => {
+    Object.values(questionsAnsweredRefs.current).forEach((questionAnswered) => {
+      questionAnswered.current?.clearAnswers();
+    });
+  };
+
   // Make the API call when hook is called
   React.useEffect(() => {
     fetchData();
@@ -61,5 +73,6 @@ export const useFetchFeedbackPage = ({ id }: { id: number }) => {
   return {
     questions: results.questions,
     questionsAnswered: questionsAnsweredRefs.current,
+    resetAnswers,
   };
 };

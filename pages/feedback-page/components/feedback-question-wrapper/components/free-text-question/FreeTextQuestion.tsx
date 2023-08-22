@@ -6,6 +6,7 @@ import {
   FreeTextQuestionAnswered,
 } from "../../../../../../models/question.models";
 import { colors } from "../../../../../../theme/colors";
+import { FeedbackQuestionForwardedRef } from "../../../../utils/interfaces";
 import FeedbackQuestionClearCta from "../../../feedback-question-clear-cta/FeedbackQuestionClearCta";
 import { style } from "./styles";
 
@@ -15,7 +16,7 @@ interface FreeTextQuestionProps {
   markQuestionAsUnDone: (question: FreeTextQuestionModel) => void;
 }
 const FreeTextQuestion = React.forwardRef<
-  FreeTextQuestionAnswered,
+  FreeTextQuestionAnswered & FeedbackQuestionForwardedRef,
   FreeTextQuestionProps
 >(({ question, markQuestionAsDone, markQuestionAsUnDone }, ref) => {
   // A single answer is required, so use directly the answer
@@ -23,21 +24,22 @@ const FreeTextQuestion = React.forwardRef<
   const [selectedAnswer, setSelectedAnswer] =
     React.useState<FreeTextQuestionAnswerModel>();
 
+  // Used when the user taps the clear selection button
+  const onClear = () => {
+    setSelectedAnswer(undefined);
+    markQuestionAsUnDone(question);
+  };
+
   // Use imperative handling to update the source of truth in the parent
   React.useImperativeHandle(
     ref,
     () => ({
       selectedAnswer,
       question,
+      clearAnswers: onClear,
     }),
     [selectedAnswer]
   );
-
-  // Used when the user taps the clear selection button
-  const onClear = () => {
-    setSelectedAnswer(undefined);
-    markQuestionAsUnDone(question);
-  };
 
   const onChangeText = (newText: string) => {
     // Update the state
@@ -61,8 +63,9 @@ const FreeTextQuestion = React.forwardRef<
         style={style.textInput}
         placeholder={"Write here..."}
         placeholderTextColor={colors.text.secondary}
-        blurOnSubmit={false}
+        blurOnSubmit={true}
         returnKeyType={"done"}
+        onSubmitEditing={() => console.log("cv")}
         multiline={true}
       />
       <FeedbackQuestionClearCta onPress={onClear} />

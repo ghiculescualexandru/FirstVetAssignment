@@ -9,6 +9,7 @@ import {
 import FeedbackQuestionClearCta from "../../../feedback-question-clear-cta/FeedbackQuestionClearCta";
 import SelectableRow from "../../../../../../components/selectable-row/SelectableRow";
 import { style } from "./styles";
+import { FeedbackQuestionForwardedRef } from "../../../../utils/interfaces";
 
 interface FeedbackMultipleChoiceQuestionProps {
   question: MultipleChoiceQuestionModel;
@@ -16,7 +17,7 @@ interface FeedbackMultipleChoiceQuestionProps {
   markQuestionAsUnDone: (question: QuestionModel) => void;
 }
 const FeedbackMultipleChoiceQuestion = React.forwardRef<
-  MultipleChoiceQuestionAnswered,
+  MultipleChoiceQuestionAnswered & FeedbackQuestionForwardedRef,
   FeedbackMultipleChoiceQuestionProps
 >(({ question, markQuestionAsDone, markQuestionAsUnDone }, ref) => {
   // A single answer is required, so use directly the answer
@@ -24,21 +25,22 @@ const FeedbackMultipleChoiceQuestion = React.forwardRef<
   const [selectedAnswers, setSelectedAnswers] =
     React.useState<MultipleChoiceQuestionAnswerModel[]>();
 
+  // Used when the user taps the clear selection button
+  const onClear = () => {
+    setSelectedAnswers(undefined);
+    markQuestionAsUnDone(question);
+  };
+
   // Use imperative handling to update the source of truth in the parent
   React.useImperativeHandle(
     ref,
     () => ({
       selectedAnswers,
       question,
+      clearAnswers: onClear,
     }),
     [selectedAnswers]
   );
-
-  // Used when the user taps the clear selection button
-  const onClear = () => {
-    setSelectedAnswers(undefined);
-    markQuestionAsUnDone(question);
-  };
 
   const renderAnswer = ({
     answer,

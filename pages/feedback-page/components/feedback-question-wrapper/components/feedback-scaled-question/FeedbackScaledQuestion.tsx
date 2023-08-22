@@ -6,6 +6,7 @@ import {
   ScaledChoiceQuestionModel,
   ScaledChoiceQuestionAnswered,
 } from "../../../../../../models/question.models";
+import { FeedbackQuestionForwardedRef } from "../../../../utils/interfaces";
 import FeedbackQuestionClearCta from "../../../feedback-question-clear-cta/FeedbackQuestionClearCta";
 import { style } from "./styles";
 
@@ -15,7 +16,7 @@ interface FeedbackScaledQuestionProps {
   markQuestionAsUnDone: (question: QuestionModel) => void;
 }
 const FeedbackScaledQuestion = React.forwardRef<
-  ScaledChoiceQuestionAnswered,
+  ScaledChoiceQuestionAnswered & FeedbackQuestionForwardedRef,
   FeedbackScaledQuestionProps
 >(({ question, markQuestionAsDone, markQuestionAsUnDone }, ref) => {
   // A single answer is required, so use directly the answer
@@ -23,21 +24,22 @@ const FeedbackScaledQuestion = React.forwardRef<
   const [selectedAnswer, setSelectedAnswer] =
     React.useState<ScaledChoiceQuestionAnswerModel>();
 
+  // Used when the user taps the clear selection button
+  const onClear = () => {
+    setSelectedAnswer(undefined);
+    markQuestionAsUnDone(question);
+  };
+
   // Use imperative handling to update the source of truth in the parent
   React.useImperativeHandle(
     ref,
     () => ({
       selectedAnswer,
       question,
+      clearAnswers: onClear,
     }),
     [selectedAnswer]
   );
-
-  // Used when the user taps the clear selection button
-  const onClear = () => {
-    setSelectedAnswer(undefined);
-    markQuestionAsUnDone(question);
-  };
 
   const renderAnswer = ({
     answer,
@@ -73,7 +75,7 @@ const FeedbackScaledQuestion = React.forwardRef<
       <View style={style.scaleContainer}>
         {question.answers.map((answer) => renderAnswer({ answer }))}
       </View>
-        <FeedbackQuestionClearCta onPress={onClear} />
+      <FeedbackQuestionClearCta onPress={onClear} />
     </View>
   );
 });
