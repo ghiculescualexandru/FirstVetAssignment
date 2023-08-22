@@ -1,3 +1,9 @@
+export type QuestionType =
+  | "single-choice"
+  | "multiple-choice"
+  | "scaled-choice"
+  | "free-text";
+
 export type RequestStatus =
   | "initial-loading"
   // This is unused at the moment, but

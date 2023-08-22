@@ -1,8 +1,12 @@
-import { QuestionAnswered } from "../../../models/question.models";
+import { QuestionAnsweredModel } from "../../../models/question.models";
 
 export interface FeedbackQuestionForwardedRef {
   clearAnswers: () => void;
 }
 
-export type AnsweredQuestionRef = QuestionAnswered &
+/**
+ * Used for forwarding ref so we can update each
+ * card component from the parent (the feedback page).
+ */
+export type QuestionAnsweredRef = QuestionAnsweredModel &
   FeedbackQuestionForwardedRef;

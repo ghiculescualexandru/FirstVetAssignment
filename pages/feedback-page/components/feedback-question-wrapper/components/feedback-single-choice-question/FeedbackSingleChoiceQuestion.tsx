@@ -2,12 +2,11 @@ import React from "react";
 import { View, Text, TouchableWithoutFeedback } from "react-native";
 import SelectableRow from "../../../../../../components/selectable-row/SelectableRow";
 import {
-  SingleChoiceQuestionAnswered,
   SingleChoiceQuestionModel,
   SingleChoiceQuestionAnswerModel,
   QuestionModel,
 } from "../../../../../../models/question.models";
-import { FeedbackQuestionForwardedRef } from "../../../../utils/interfaces";
+import { QuestionAnsweredRef } from "../../../../utils/interfaces";
 import FeedbackQuestionClearCta from "../../../feedback-question-clear-cta/FeedbackQuestionClearCta";
 import { style } from "./styles";
 
@@ -18,7 +17,7 @@ interface FeedbackSingleChoiceQuestionProps {
   markQuestionAsUnDone: (question: QuestionModel) => void;
 }
 const FeedbackSingleChoiceQuestion = React.forwardRef<
-  SingleChoiceQuestionAnswered & FeedbackQuestionForwardedRef,
+  QuestionAnsweredRef,
   FeedbackSingleChoiceQuestionProps
 >(({ question, markQuestionAsDone, markQuestionAsUnDone }, ref) => {
   // A single answer is required, so use directly the answer
@@ -39,6 +38,7 @@ const FeedbackSingleChoiceQuestion = React.forwardRef<
       selectedAnswer,
       question,
       clearAnswers: onClear,
+      type: question.type,
     }),
     [selectedAnswer]
   );

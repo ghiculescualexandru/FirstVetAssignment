@@ -24,17 +24,12 @@ const FeedbackPage = ({
     id: route.params.id,
   });
 
-  const {
-    buttonState,
-    // updateButtonState,
-    markQuestionAsDone,
-    markQuestionAsUnDone,
-  } = useFeedbackPageFooterState({ numberOfQuestions: questions.length });
+  const { buttonState, markQuestionAsDone, markQuestionAsUnDone } =
+    useFeedbackPageFooterState({ numberOfQuestions: questions.length });
 
   const onContinuePress = () => {
-    const data = getAnswersData();
-    console.log(data);
-    navigation.navigate("FeedbackRecap", { answers: data });
+    const answers = getAnswersData();
+    navigation.navigate("FeedbackRecap", { answers });
   };
 
   const renderListItem = ({ item }: { item: QuestionModel }) => {

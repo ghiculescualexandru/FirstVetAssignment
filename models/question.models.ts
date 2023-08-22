@@ -1,75 +1,96 @@
+import { QuestionType } from "../types/global.types";
+
 /**
- * Models related to single choice question
+ * Base Question model.
+ * All questions should have an id, a text and a type
  */
-export interface SingleChoiceQuestionAnswerModel {
+interface BaseQuestionModel<QType extends QuestionType> {
+  questionId: number;
+  questionText: string;
+  type: QType;
+}
+
+/**
+ * Base model for the answered question.
+ * All answered questions should have the question, the selected answer
+ * and their type
+ */
+interface BaseQuestionAnsweredModel<
+  QModel,
+  SAModel,
+  QType extends QuestionType
+> {
+  question?: QModel;
+  selectedAnswer?: SAModel;
+  type: QType;
+}
+
+/**
+ * Base model for a text answer.
+ */
+interface BaseTextAnswerModel {
   id: number;
   text: string;
 }
 
-export interface SingleChoiceQuestionModel {
-  type: "single-choice";
-  questionId: number;
-  questionText: string;
+/**
+ * Models related to single choice question
+ */
+export type SingleChoiceQuestionAnswerModel = BaseTextAnswerModel;
+export interface SingleChoiceQuestionModel
+  extends BaseQuestionModel<"single-choice"> {
   answers: SingleChoiceQuestionAnswerModel[];
 }
-
-export interface SingleChoiceQuestionAnswered {
-  question?: SingleChoiceQuestionModel;
-  selectedAnswer?: SingleChoiceQuestionAnswerModel;
-}
+export interface SingleChoiceQuestionAnsweredModel
+  extends BaseQuestionAnsweredModel<
+    SingleChoiceQuestionModel,
+    SingleChoiceQuestionAnswerModel,
+    "single-choice"
+  > {}
 
 /**
  * Models related to multiplce choice question
  */
-export interface MultipleChoiceQuestionAnswerModel {
-  id: number;
-  text: string;
-}
-
-export interface MultipleChoiceQuestionModel {
-  type: "multiple-choice";
-  questionId: number;
-  questionText: string;
+export type MultipleChoiceQuestionAnswerModel = BaseTextAnswerModel;
+export interface MultipleChoiceQuestionModel
+  extends BaseQuestionModel<"multiple-choice"> {
   answers: MultipleChoiceQuestionAnswerModel[];
 }
-
-export interface MultipleChoiceQuestionAnswered {
-  question?: MultipleChoiceQuestionModel;
-  selectedAnswer?: MultipleChoiceQuestionAnswerModel[];
+export interface MultipleChoiceQuestionAnsweredModel
+  extends BaseQuestionAnsweredModel<
+    MultipleChoiceQuestionModel,
+    MultipleChoiceQuestionAnswerModel[],
+    "multiple-choice"
+  > {}
+{
 }
 
 /**
  * Models related to scaled choice question
  */
 export type ScaledChoiceQuestionAnswerModel = number;
-
-export interface ScaledChoiceQuestionModel {
-  type: "scaled-choice";
-  questionId: number;
-  questionText: string;
+export interface ScaledChoiceQuestionModel
+  extends BaseQuestionModel<"scaled-choice"> {
   answers: ScaledChoiceQuestionAnswerModel[];
 }
-
-export interface ScaledChoiceQuestionAnswered {
-  question?: ScaledChoiceQuestionModel;
-  selectedAnswer?: ScaledChoiceQuestionAnswerModel;
-}
+export interface ScaledChoiceQuestionAnsweredModel
+  extends BaseQuestionAnsweredModel<
+    ScaledChoiceQuestionModel,
+    ScaledChoiceQuestionAnswerModel,
+    "scaled-choice"
+  > {}
 
 /**
  * Models related to free text question
  */
 export type FreeTextQuestionAnswerModel = string;
-
-export interface FreeTextQuestionModel {
-  type: "free-text";
-  questionId: number;
-  questionText: string;
-}
-
-export interface FreeTextQuestionAnswered {
-  question?: FreeTextQuestionModel;
-  selectedAnswer?: FreeTextQuestionAnswerModel;
-}
+export interface FreeTextQuestionModel extends BaseQuestionModel<"free-text"> {}
+export interface FreeTextQuestionAnsweredModel
+  extends BaseQuestionAnsweredModel<
+    FreeTextQuestionModel,
+    FreeTextQuestionAnswerModel,
+    "free-text"
+  > {}
 
 /**
  * Merged models
@@ -80,8 +101,8 @@ export type QuestionModel =
   | ScaledChoiceQuestionModel
   | FreeTextQuestionModel;
 
-export type QuestionAnswered =
-  | SingleChoiceQuestionAnswered
-  | MultipleChoiceQuestionAnswered
-  | ScaledChoiceQuestionAnswered
-  | FreeTextQuestionAnswered;
+export type QuestionAnsweredModel =
+  | SingleChoiceQuestionAnsweredModel
+  | MultipleChoiceQuestionAnsweredModel
+  | ScaledChoiceQuestionAnsweredModel
+  | FreeTextQuestionAnsweredModel;

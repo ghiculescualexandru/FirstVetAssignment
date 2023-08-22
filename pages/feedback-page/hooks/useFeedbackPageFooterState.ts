@@ -14,7 +14,7 @@ export const useFeedbackPageFooterState = ({
 
   // Used to keep track of all question marked as done so
   // we can update the button state
-  const questionMarkedAsDoneRefs = React.useRef<Record<number, boolean>>({});
+  const completedQuestionsByIdRef = React.useRef<Record<number, boolean>>({});
 
   // Updates the button state with the new state
   const updateButtonState = (newState: ButtonStatus) => {
@@ -23,14 +23,15 @@ export const useFeedbackPageFooterState = ({
 
   // Marks a question as done, by id
   const markQuestionAsDone = (question: QuestionModel) => {
-    if (questionMarkedAsDoneRefs.current[question.questionId]) {
+    if (completedQuestionsByIdRef.current[question.questionId]) {
       return;
     }
     // Mark the question as done
-    questionMarkedAsDoneRefs.current[question.questionId] = true;
+    completedQuestionsByIdRef.current[question.questionId] = true;
     // Update the button state if necessary
     if (
-      Object.keys(questionMarkedAsDoneRefs.current).length === numberOfQuestions
+      Object.keys(completedQuestionsByIdRef.current).length ===
+      numberOfQuestions
     ) {
       updateButtonState("enabled");
     }
@@ -38,14 +39,14 @@ export const useFeedbackPageFooterState = ({
 
   // Marks a question as not done, by id
   const markQuestionAsUnDone = (question: QuestionModel) => {
-    if (!questionMarkedAsDoneRefs.current[question.questionId]) {
+    if (!completedQuestionsByIdRef.current[question.questionId]) {
       return;
     }
     // Remove the question from the record
-    delete questionMarkedAsDoneRefs.current[question.questionId];
+    delete completedQuestionsByIdRef.current[question.questionId];
     // Update the button state if necessary
     if (
-      Object.keys(questionMarkedAsDoneRefs.current).length < numberOfQuestions
+      Object.keys(completedQuestionsByIdRef.current).length < numberOfQuestions
     ) {
       updateButtonState("disabled");
     }

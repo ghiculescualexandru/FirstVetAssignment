@@ -1,46 +1,43 @@
+import { QuestionType } from "../types/global.types";
+
 /**
- * Models for api answers
+ * Base Question model for API
  */
-export interface SingleChoiceQuestionAnswerApiResponse {
+interface BaseQuestionApiResponse<QType extends QuestionType> {
+  question_id: number;
+  question_text: string;
+  type: QType;
+}
+/**
+ * Models for API answers
+ */
+interface BaseTextAnswerApiResponse {
   id: number;
   text: string;
 }
-export interface MultipleChoiceQuestionAnswerApiResponse {
-  id: number;
-  text: string;
-}
+export type SingleChoiceQuestionAnswerApiResponse = BaseTextAnswerApiResponse;
+export type MultipleChoiceQuestionAnswerApiResponse = BaseTextAnswerApiResponse;
 export type ScaledChoiceQuestionAnswerApiResponse = number;
 export type FreeTextQuestionAnswerApiResponse = string;
 
 /**
- * Models related to api questions, with their type and response
+ * Models related to API questions, with their type and response
  */
-interface SingleChoiceQuestionApiResponse {
-  type: "single-choice";
-  question_id: number;
-  question_text: string;
+interface SingleChoiceQuestionApiResponse
+  extends BaseQuestionApiResponse<"single-choice"> {
   answers: SingleChoiceQuestionAnswerApiResponse[];
 }
-
-interface MultipleChoiceQuestionApiResponse {
-  type: "multiple-choice";
-  question_id: number;
-  question_text: string;
+interface MultipleChoiceQuestionApiResponse
+  extends BaseQuestionApiResponse<"multiple-choice"> {
   answers: MultipleChoiceQuestionAnswerApiResponse[];
 }
 
-interface ScaledChoiceQuestionApiResponse {
-  type: "scaled-choice";
-  question_id: number;
-  question_text: string;
+interface ScaledChoiceQuestionApiResponse
+  extends BaseQuestionApiResponse<"scaled-choice"> {
   answers: ScaledChoiceQuestionAnswerApiResponse[];
 }
-
-interface FreeTextQuestionApiResponse {
-  type: "free-text";
-  question_id: number;
-  question_text: string;
-}
+interface FreeTextQuestionApiResponse
+  extends BaseQuestionApiResponse<"free-text"> {}
 
 /**
  * Merged model for question response from api

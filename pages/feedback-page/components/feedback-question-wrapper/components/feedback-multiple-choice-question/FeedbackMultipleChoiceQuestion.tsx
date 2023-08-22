@@ -1,7 +1,7 @@
 import { View, Text, TouchableWithoutFeedback } from "react-native";
 import React from "react";
 import {
-  MultipleChoiceQuestionAnswered,
+  MultipleChoiceQuestionAnsweredModel,
   MultipleChoiceQuestionModel,
   MultipleChoiceQuestionAnswerModel,
   QuestionModel,
@@ -9,7 +9,7 @@ import {
 import FeedbackQuestionClearCta from "../../../feedback-question-clear-cta/FeedbackQuestionClearCta";
 import SelectableRow from "../../../../../../components/selectable-row/SelectableRow";
 import { style } from "./styles";
-import { FeedbackQuestionForwardedRef } from "../../../../utils/interfaces";
+import { QuestionAnsweredRef } from "../../../../utils/interfaces";
 
 interface FeedbackMultipleChoiceQuestionProps {
   question: MultipleChoiceQuestionModel;
@@ -17,7 +17,7 @@ interface FeedbackMultipleChoiceQuestionProps {
   markQuestionAsUnDone: (question: QuestionModel) => void;
 }
 const FeedbackMultipleChoiceQuestion = React.forwardRef<
-  MultipleChoiceQuestionAnswered & FeedbackQuestionForwardedRef,
+  QuestionAnsweredRef,
   FeedbackMultipleChoiceQuestionProps
 >(({ question, markQuestionAsDone, markQuestionAsUnDone }, ref) => {
   // A single answer is required, so use directly the answer
@@ -36,8 +36,9 @@ const FeedbackMultipleChoiceQuestion = React.forwardRef<
     ref,
     () => ({
       selectedAnswer,
-      question,
       clearAnswers: onClear,
+      question,
+      type: question.type,
     }),
     [selectedAnswer]
   );
@@ -100,7 +101,7 @@ const FeedbackMultipleChoiceQuestion = React.forwardRef<
   };
 
   return (
-    <View style={{}}>
+    <View>
       {question.answers.map((answer) => renderAnswer({ answer }))}
       <FeedbackQuestionClearCta onPress={onClear} />
     </View>

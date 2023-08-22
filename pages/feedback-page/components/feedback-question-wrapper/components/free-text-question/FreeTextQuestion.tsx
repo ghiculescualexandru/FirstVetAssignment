@@ -1,12 +1,11 @@
 import React from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, TextInput } from "react-native";
 import {
   FreeTextQuestionAnswerModel,
   FreeTextQuestionModel,
-  FreeTextQuestionAnswered,
 } from "../../../../../../models/question.models";
 import { colors } from "../../../../../../theme/colors";
-import { FeedbackQuestionForwardedRef } from "../../../../utils/interfaces";
+import { QuestionAnsweredRef } from "../../../../utils/interfaces";
 import FeedbackQuestionClearCta from "../../../feedback-question-clear-cta/FeedbackQuestionClearCta";
 import { style } from "./styles";
 
@@ -16,7 +15,7 @@ interface FreeTextQuestionProps {
   markQuestionAsUnDone: (question: FreeTextQuestionModel) => void;
 }
 const FreeTextQuestion = React.forwardRef<
-  FreeTextQuestionAnswered & FeedbackQuestionForwardedRef,
+  QuestionAnsweredRef,
   FreeTextQuestionProps
 >(({ question, markQuestionAsDone, markQuestionAsUnDone }, ref) => {
   // A single answer is required, so use directly the answer
@@ -37,6 +36,7 @@ const FreeTextQuestion = React.forwardRef<
       selectedAnswer,
       question,
       clearAnswers: onClear,
+      type: question.type,
     }),
     [selectedAnswer]
   );
@@ -56,7 +56,6 @@ const FreeTextQuestion = React.forwardRef<
     <View>
       {/* [TODO TO DO] adauga in modele sa poti sa il lasi sau nu gol
       si sa il blocheze sau nu pe user daca nu il completeaza */}
-      {/* [TODO] If I have time, handle list when keyboard occurs */}
       <TextInput
         value={selectedAnswer}
         onChangeText={onChangeText}

@@ -3,17 +3,9 @@ import React from "react";
 import { View, Text, FlatList } from "react-native";
 import { RootStackParamList } from "../../navigation/navigation.models";
 import { style } from "./styles";
-import {
-  QuestionAnswered,
-  MultipleChoiceQuestionAnswered,
-  MultipleChoiceQuestionAnswerModel,
-} from "../../models/question.models";
+import { QuestionAnsweredModel } from "../../models/question.models";
 import BaseCard from "../../components/base-card/BaseCard";
-import {
-  FreeTextQuestionAnswerModel,
-  ScaledChoiceQuestionAnswerModel,
-  SingleChoiceQuestionAnswerModel,
-} from "../../models/question.models";
+import { BaseButton } from "../../components/base-button/BaseButton";
 
 const FeedbackRecapPage = ({
   route,
@@ -21,27 +13,34 @@ const FeedbackRecapPage = ({
 }: NativeStackScreenProps<RootStackParamList, "FeedbackRecap">) => {
   const answers = route.params.answers;
 
-  const getAnswerByQuestion = (item: QuestionAnswered) => {
-    switch (item?.question?.type) {
+  const onFinish = () => {
+    // [TODO] Send items to backend
+    navigation.popToTop();
+  };
+
+  const getAnswerByQuestion = (item: QuestionAnsweredModel) => {
+    switch (item.type) {
       case "free-text":
-        return (item.selectedAnswer as FreeTextQuestionAnswerModel) ?? "";
+        return item.selectedAnswer ?? "";
       case "multiple-choice":
-        return (
-          (item.selectedAnswer as MultipleChoiceQuestionAnswerModel[])?.[0]
-            .text ?? ""
+        return item.selectedAnswer?.map(
+          (value, index) =>
+            // Concatenate the checked symbol with the text and
+            // add newline for all items, unless is the last item
+            `✓ ${value.text} ${
+              index !== (item.selectedAnswer?.length ?? 0) - 1 ? "\n" : ""
+            }`
         );
       case "scaled-choice":
-        return (
-          item.selectedAnswer as ScaledChoiceQuestionAnswerModel
-        ).toString();
+        return item.selectedAnswer?.toString();
       case "single-choice":
-        return (item.selectedAnswer as SingleChoiceQuestionAnswerModel).text;
+        return item.selectedAnswer?.text;
       default:
         return "";
     }
   };
 
-  const renderListItem = ({ item }: { item: QuestionAnswered }) => {
+  const renderListItem = ({ item }: { item: QuestionAnsweredModel }) => {
     return (
       <BaseCard containerStyle={style.cardStyle}>
         <View>
@@ -52,11 +51,20 @@ const FeedbackRecapPage = ({
     );
   };
 
+  const listFooter = (
+    <BaseButton
+      containerStyle={style.buttonContainer}
+      text={"Finish"}
+      onPress={onFinish}
+    />
+  );
+
   return (
     <FlatList
       contentContainerStyle={style.listContentContainer}
       data={answers}
       renderItem={renderListItem}
+      ListFooterComponent={listFooter}
     />
   );
 };

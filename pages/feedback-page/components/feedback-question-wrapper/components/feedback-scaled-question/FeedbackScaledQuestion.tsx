@@ -4,9 +4,8 @@ import {
   QuestionModel,
   ScaledChoiceQuestionAnswerModel,
   ScaledChoiceQuestionModel,
-  ScaledChoiceQuestionAnswered,
 } from "../../../../../../models/question.models";
-import { FeedbackQuestionForwardedRef } from "../../../../utils/interfaces";
+import { QuestionAnsweredRef } from "../../../../utils/interfaces";
 import FeedbackQuestionClearCta from "../../../feedback-question-clear-cta/FeedbackQuestionClearCta";
 import { style } from "./styles";
 
@@ -16,7 +15,7 @@ interface FeedbackScaledQuestionProps {
   markQuestionAsUnDone: (question: QuestionModel) => void;
 }
 const FeedbackScaledQuestion = React.forwardRef<
-  ScaledChoiceQuestionAnswered & FeedbackQuestionForwardedRef,
+  QuestionAnsweredRef,
   FeedbackScaledQuestionProps
 >(({ question, markQuestionAsDone, markQuestionAsUnDone }, ref) => {
   // A single answer is required, so use directly the answer
@@ -37,6 +36,7 @@ const FeedbackScaledQuestion = React.forwardRef<
       selectedAnswer,
       question,
       clearAnswers: onClear,
+      type: question.type,
     }),
     [selectedAnswer]
   );

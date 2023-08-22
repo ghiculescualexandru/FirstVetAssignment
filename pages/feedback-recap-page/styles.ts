@@ -22,7 +22,8 @@ const createStyleSheet = () => {
       paddingBottom: 100,
     },
     buttonContainer: {
-      marginBottom: spacing.m,
+      marginVertical: spacing.m,
+      alignSelf: "center",
     },
     cardStyle: {
       marginBottom: spacing.m,

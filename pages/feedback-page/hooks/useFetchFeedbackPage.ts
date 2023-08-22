@@ -1,12 +1,12 @@
 import React from "react";
 import {
   QuestionModel,
-  QuestionAnswered,
+  QuestionAnsweredModel,
 } from "../../../models/question.models";
 import { fetchFeedbackPageById } from "../../../services/question.service";
 import { RequestStatus } from "../../../types/global.types";
 import { normalizeQuestions } from "../../../utils/question.utils";
-import { AnsweredQuestionRef } from "../utils/interfaces";
+import { QuestionAnsweredRef } from "../utils/interfaces";
 
 export const useFetchFeedbackPage = ({ id }: { id: number }) => {
   // The questions will be updated into a state, so that the page
@@ -23,7 +23,7 @@ export const useFetchFeedbackPage = ({ id }: { id: number }) => {
   // This is the source of truth for the page, which will be passed as data
   // when making the API call for the response
   const questionsAnsweredRefs = React.useRef<
-    Record<number, React.RefObject<AnsweredQuestionRef>>
+    Record<number, React.RefObject<QuestionAnsweredRef>>
   >({});
 
   // Main function which fetches all data for the page
@@ -38,7 +38,7 @@ export const useFetchFeedbackPage = ({ id }: { id: number }) => {
       // Create source of truth
       normalizedData.map((question) => {
         questionsAnsweredRefs.current[question.questionId] =
-          React.createRef<AnsweredQuestionRef>();
+          React.createRef<QuestionAnsweredRef>();
       });
       // Update state
       setResults({
@@ -63,14 +63,10 @@ export const useFetchFeedbackPage = ({ id }: { id: number }) => {
   };
 
   // Returns the questions and selected answers from the local source of truth
-  const getAnswersData = (): QuestionAnswered[] => {
+  const getAnswersData = (): QuestionAnsweredModel[] => {
     return Object.values(questionsAnsweredRefs.current).map(
-      (questionAnsweredRef: React.RefObject<AnsweredQuestionRef>) => {
-        return {
-          question: questionAnsweredRef.current?.question,
-          selectedAnswer: questionAnsweredRef.current?.selectedAnswer,
-        } as QuestionAnswered;
-      }
+      (questionAnsweredRef) =>
+        questionAnsweredRef.current as QuestionAnsweredModel
     );
   };
 
