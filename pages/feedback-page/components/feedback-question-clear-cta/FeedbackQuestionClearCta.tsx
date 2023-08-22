@@ -13,11 +13,11 @@ const FeedbackQuestionClearCta = ({
   onPress,
 }: FeedbackQuestionClearCtaProps) => {
   return (
-    <TouchableWithoutFeedback onPress={onPress}>
-      <View style={style.container}>
+    <View style={style.container}>
+      <TouchableWithoutFeedback onPress={onPress}>
         <Text style={style.text}>{`${COMMON_STRINGS.clear} ${X_ICON}`}</Text>
-      </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </View>
   );
 };
 

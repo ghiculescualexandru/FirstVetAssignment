@@ -9,6 +9,7 @@ import BaseCard from "../../../../components/base-card/BaseCard";
 import { style } from "./styles";
 import FeedbackQuestionTitle from "../feedback-question-title/FeedbackQuestionTitle";
 import { QuestionAnsweredRef } from "../../utils/interfaces";
+import FeedbackDateChoiceQuestion from "./components/feedback-date-choice-question/FeedbackDateChoiceQuestion";
 
 interface FeedbackQuestionWrapperProps {
   question: QuestionModel;
@@ -61,6 +62,15 @@ const FeedbackQuestionWrapper = ({
             ref={questionRef}
           />
         );
+      case "date-choice":
+        return (
+          <FeedbackDateChoiceQuestion
+            question={question}
+            markQuestionAsCompleted={markQuestionAsCompleted}
+            markQuestionAsNotCompleted={markQuestionAsNotCompleted}
+            ref={questionRef}
+          />
+        );
       default:
         return null;
     }
@@ -73,11 +83,13 @@ const FeedbackQuestionWrapper = ({
     </View>
   );
 
-  return (
+  // If the answer component is not defined, do not display the card at all
+  // eg: (if backend deployed a new type of question which frontend hasn't yet implemented)
+  return answersComponent ? (
     <View style={style.cardContainer}>
       <BaseCard>{questionComponent}</BaseCard>
     </View>
-  );
+  ) : null;
 };
 
 export default FeedbackQuestionWrapper;

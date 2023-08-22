@@ -2,7 +2,8 @@ export type QuestionType =
   | "single-choice"
   | "multiple-choice"
   | "scaled-choice"
-  | "free-text";
+  | "free-text"
+  | "date-choice";
 
 export type RequestStatus =
   | "initial-loading"

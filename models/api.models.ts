@@ -19,6 +19,7 @@ export type SingleChoiceQuestionAnswerApiResponse = BaseTextAnswerApiResponse;
 export type MultipleChoiceQuestionAnswerApiResponse = BaseTextAnswerApiResponse;
 export type ScaledChoiceQuestionAnswerApiResponse = number;
 export type FreeTextQuestionAnswerApiResponse = string;
+export type DateQuestionAnswerApiResponse = string;
 
 /**
  * Models related to API questions, with their type and response
@@ -38,6 +39,8 @@ interface ScaledChoiceQuestionApiResponse
 }
 interface FreeTextQuestionApiResponse
   extends BaseQuestionApiResponse<"free-text"> {}
+interface DateChoiceQuestionApiResponse
+  extends BaseQuestionApiResponse<"date-choice"> {}
 
 /**
  * Merged model for question response from api
@@ -46,7 +49,8 @@ export type QuestionApiResponse =
   | SingleChoiceQuestionApiResponse
   | MultipleChoiceQuestionApiResponse
   | ScaledChoiceQuestionApiResponse
-  | FreeTextQuestionApiResponse;
+  | FreeTextQuestionApiResponse
+  | DateChoiceQuestionApiResponse;
 
 /**
  * Model for the whole feedback page.

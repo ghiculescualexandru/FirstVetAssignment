@@ -93,16 +93,31 @@ export interface FreeTextQuestionAnsweredModel
   > {}
 
 /**
+ * Models related to date choice question
+ */
+export type DateChoiceQuestionAnswerModel = string;
+export interface DateChoiceQuestionModel
+  extends BaseQuestionModel<"date-choice"> {}
+export interface DateChoiceQuestionAnsweredModel
+  extends BaseQuestionAnsweredModel<
+    DateChoiceQuestionModel,
+    DateChoiceQuestionAnswerModel,
+    "date-choice"
+  > {}
+
+/**
  * Merged models
  */
 export type QuestionModel =
   | SingleChoiceQuestionModel
   | MultipleChoiceQuestionModel
   | ScaledChoiceQuestionModel
-  | FreeTextQuestionModel;
+  | FreeTextQuestionModel
+  | DateChoiceQuestionModel;
 
 export type QuestionAnsweredModel =
   | SingleChoiceQuestionAnsweredModel
   | MultipleChoiceQuestionAnsweredModel
   | ScaledChoiceQuestionAnsweredModel
-  | FreeTextQuestionAnsweredModel;
+  | FreeTextQuestionAnsweredModel
+  | DateChoiceQuestionAnsweredModel;
