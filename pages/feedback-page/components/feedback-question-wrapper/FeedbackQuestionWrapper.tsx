@@ -13,14 +13,14 @@ import { QuestionAnsweredRef } from "../../utils/interfaces";
 interface FeedbackQuestionWrapperProps {
   question: QuestionModel;
   questionRef: React.RefObject<QuestionAnsweredRef>;
-  markQuestionAsDone: (question: QuestionModel) => void;
-  markQuestionAsUnDone: (question: QuestionModel) => void;
+  markQuestionAsCompleted: (question: QuestionModel) => void;
+  markQuestionAsNotCompleted: (question: QuestionModel) => void;
 }
 
 const FeedbackQuestionWrapper = ({
   question,
-  markQuestionAsDone,
-  markQuestionAsUnDone,
+  markQuestionAsCompleted,
+  markQuestionAsNotCompleted,
   questionRef,
 }: FeedbackQuestionWrapperProps) => {
   const answersComponent = React.useMemo(() => {
@@ -29,8 +29,8 @@ const FeedbackQuestionWrapper = ({
         return (
           <FeedbackMultipleChoiceQuestion
             question={question}
-            markQuestionAsDone={markQuestionAsDone}
-            markQuestionAsUnDone={markQuestionAsUnDone}
+            markQuestionAsCompleted={markQuestionAsCompleted}
+            markQuestionAsNotCompleted={markQuestionAsNotCompleted}
             ref={questionRef}
           />
         );
@@ -38,8 +38,8 @@ const FeedbackQuestionWrapper = ({
         return (
           <FeedbackSingleChoiceQuestion
             question={question}
-            markQuestionAsDone={markQuestionAsDone}
-            markQuestionAsUnDone={markQuestionAsUnDone}
+            markQuestionAsCompleted={markQuestionAsCompleted}
+            markQuestionAsNotCompleted={markQuestionAsNotCompleted}
             ref={questionRef}
           />
         );
@@ -47,8 +47,8 @@ const FeedbackQuestionWrapper = ({
         return (
           <FeedbackScaledQuestion
             question={question}
-            markQuestionAsDone={markQuestionAsDone}
-            markQuestionAsUnDone={markQuestionAsUnDone}
+            markQuestionAsCompleted={markQuestionAsCompleted}
+            markQuestionAsNotCompleted={markQuestionAsNotCompleted}
             ref={questionRef}
           />
         );
@@ -56,8 +56,8 @@ const FeedbackQuestionWrapper = ({
         return (
           <FreeTextQuestion
             question={question}
-            markQuestionAsDone={markQuestionAsDone}
-            markQuestionAsUnDone={markQuestionAsUnDone}
+            markQuestionAsCompleted={markQuestionAsCompleted}
+            markQuestionAsNotCompleted={markQuestionAsNotCompleted}
             ref={questionRef}
           />
         );

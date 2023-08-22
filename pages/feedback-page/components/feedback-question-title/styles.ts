@@ -1,6 +1,7 @@
 import { StyleSheet, ViewStyle, TextStyle } from "react-native";
 import { colors } from "../../../../theme/colors";
 import { spacing } from "../../../../theme/spacing";
+import { typography } from "../../../../theme/typography";
 
 interface Style {
   container: ViewStyle;
@@ -14,7 +15,7 @@ const createStyleSheet = () => {
     },
     text: {
       color: colors.text.primary,
-      fontSize: 20,
+      fontSize: typography.size.medium,
     },
   });
 };

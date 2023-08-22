@@ -6,5 +6,7 @@ export const COMMON_STRINGS = {
   nothingToSee: "Nothing to see...",
   somethingWentWrong: "Something went wrong, try again...",
   start: "Let's get to it!",
-  finish: "Take another look before finishing. It really helps us improve!",
+  finishInfo: "Take another look before finishing. It really helps us improve!",
+  finish: "Finish",
+  inputPlaceholder: "Write here...",
 };

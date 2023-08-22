@@ -1,5 +1,6 @@
 import { StyleSheet, ViewStyle, TextStyle } from "react-native";
 import { spacing } from "../../theme/spacing";
+import { typography } from "../../theme/typography";
 
 interface Style {
   listContentContainer: ViewStyle;
@@ -12,7 +13,7 @@ interface Style {
 const createStyleSheet = () => {
   return StyleSheet.create<Style>({
     listContentContainer: {
-      paddingBottom: 100, // Add screen height here
+      paddingBottom: 100,
     },
     loadingContainer: {
       justifyContent: "center",
@@ -27,7 +28,7 @@ const createStyleSheet = () => {
       alignSelf: "center",
     },
     headerText: {
-      fontSize: 24,
+      fontSize: typography.size.large,
       marginVertical: spacing.l,
       paddingHorizontal: spacing.l,
     },

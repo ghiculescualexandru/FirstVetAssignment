@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableWithoutFeedback } from "react-native";
+import { View } from "react-native";
 import SelectableRow from "../../../../../../components/selectable-row/SelectableRow";
 import {
   SingleChoiceQuestionModel,
@@ -12,14 +12,13 @@ import { style } from "./styles";
 
 interface FeedbackSingleChoiceQuestionProps {
   question: SingleChoiceQuestionModel;
-  // [TOXO TO DO change question with type from above]
-  markQuestionAsDone: (question: QuestionModel) => void;
-  markQuestionAsUnDone: (question: QuestionModel) => void;
+  markQuestionAsCompleted: (question: QuestionModel) => void;
+  markQuestionAsNotCompleted: (question: QuestionModel) => void;
 }
 const FeedbackSingleChoiceQuestion = React.forwardRef<
   QuestionAnsweredRef,
   FeedbackSingleChoiceQuestionProps
->(({ question, markQuestionAsDone, markQuestionAsUnDone }, ref) => {
+>(({ question, markQuestionAsCompleted, markQuestionAsNotCompleted }, ref) => {
   // A single answer is required, so use directly the answer
   // model for single choice question
   const [selectedAnswer, setSelectedAnswer] =
@@ -28,7 +27,7 @@ const FeedbackSingleChoiceQuestion = React.forwardRef<
   // Used when the user taps the clear selection button
   const onClear = () => {
     setSelectedAnswer(undefined);
-    markQuestionAsUnDone(question);
+    markQuestionAsNotCompleted(question);
   };
 
   // Use imperative handling to update the source of truth in the parent
@@ -54,7 +53,7 @@ const FeedbackSingleChoiceQuestion = React.forwardRef<
     // On press, update the state and mark the question as done
     const onPress = () => {
       setSelectedAnswer(answer);
-      markQuestionAsDone(question);
+      markQuestionAsCompleted(question);
     };
 
     return (

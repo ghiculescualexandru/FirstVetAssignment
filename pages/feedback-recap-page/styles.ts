@@ -1,5 +1,6 @@
 import { StyleSheet, ViewStyle, TextStyle } from "react-native";
 import { spacing } from "../../theme/spacing";
+import { typography } from "../../theme/typography";
 
 interface Style {
   container: ViewStyle;
@@ -29,11 +30,11 @@ const createStyleSheet = () => {
       marginBottom: spacing.m,
     },
     questionText: {
-      fontSize: 20,
+      fontSize: typography.size.medium,
       marginBottom: spacing.xs,
     },
     headerText: {
-      fontSize: 24,
+      fontSize: typography.size.large,
       marginVertical: spacing.l,
     },
   });

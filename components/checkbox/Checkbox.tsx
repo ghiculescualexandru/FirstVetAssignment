@@ -2,6 +2,8 @@ import React from "react";
 import { View, Text, ViewStyle, StyleProp } from "react-native";
 import { style } from "./styles";
 
+const CHECK_ICON = "✓";
+
 interface CheckboxProps {
   selected?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
@@ -16,8 +18,7 @@ const Checkbox = ({ selected, containerStyle }: CheckboxProps) => {
         containerStyle,
       ]}
     >
-      {/* [TODO] If i have time, add check SVG and use it here */}
-      {selected ? <Text style={style.checkIcon}>{"✓"}</Text> : null}
+      {selected ? <Text style={style.checkIcon}>{CHECK_ICON}</Text> : null}
     </View>
   );
 };

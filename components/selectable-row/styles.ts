@@ -7,7 +7,6 @@ interface Style {
   container: ViewStyle;
   selectedContainer: ViewStyle;
   selectionComponentContainer: ViewStyle;
-  text: TextStyle;
 }
 
 const createStyleSheet = () => {
@@ -25,7 +24,6 @@ const createStyleSheet = () => {
     selectedContainer: {
       borderColor: colors.selection.selected,
     },
-    text: {},
     selectionComponentContainer: {
       marginRight: spacing.xs,
     },

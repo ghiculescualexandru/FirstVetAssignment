@@ -2,6 +2,7 @@ import { StyleSheet, ViewStyle, TextStyle } from "react-native";
 import { borderRadius } from "../../theme/borderRadius";
 import { colors } from "../../theme/colors";
 import { spacing } from "../../theme/spacing";
+import { typography } from "../../theme/typography";
 
 const BUTTON_SIZE = {
   width: 200,
@@ -31,7 +32,7 @@ const createStyleSheet = () => {
     },
     text: {
       color: colors.text.inverted,
-      fontSize: 20,
+      fontSize: typography.size.medium,
     },
     leftComponent: {
       marginRight: spacing.xs,

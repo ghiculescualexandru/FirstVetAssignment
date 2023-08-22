@@ -8,16 +8,17 @@ import { colors } from "../../../../../../theme/colors";
 import { QuestionAnsweredRef } from "../../../../utils/interfaces";
 import FeedbackQuestionClearCta from "../../../feedback-question-clear-cta/FeedbackQuestionClearCta";
 import { style } from "./styles";
+import { COMMON_STRINGS } from "../../../../../../strings/strings.common";
 
 interface FreeTextQuestionProps {
   question: FreeTextQuestionModel;
-  markQuestionAsDone: (question: FreeTextQuestionModel) => void;
-  markQuestionAsUnDone: (question: FreeTextQuestionModel) => void;
+  markQuestionAsCompleted: (question: FreeTextQuestionModel) => void;
+  markQuestionAsNotCompleted: (question: FreeTextQuestionModel) => void;
 }
 const FreeTextQuestion = React.forwardRef<
   QuestionAnsweredRef,
   FreeTextQuestionProps
->(({ question, markQuestionAsDone, markQuestionAsUnDone }, ref) => {
+>(({ question, markQuestionAsCompleted, markQuestionAsNotCompleted }, ref) => {
   // A single answer is required, so use directly the answer
   // model for scaled choice question
   const [selectedAnswer, setSelectedAnswer] =
@@ -26,7 +27,7 @@ const FreeTextQuestion = React.forwardRef<
   // Used when the user taps the clear selection button
   const onClear = () => {
     setSelectedAnswer(undefined);
-    markQuestionAsUnDone(question);
+    markQuestionAsNotCompleted(question);
   };
 
   // Use imperative handling to update the source of truth in the parent
@@ -46,25 +47,22 @@ const FreeTextQuestion = React.forwardRef<
     setSelectedAnswer(newText);
     // Mark the question as done or undone based on length
     if (newText.trim().length > 0) {
-      markQuestionAsDone(question);
+      markQuestionAsCompleted(question);
     } else {
-      markQuestionAsUnDone(question);
+      markQuestionAsNotCompleted(question);
     }
   };
 
   return (
     <View>
-      {/* [TODO TO DO] adauga in modele sa poti sa il lasi sau nu gol
-      si sa il blocheze sau nu pe user daca nu il completeaza */}
       <TextInput
         value={selectedAnswer}
         onChangeText={onChangeText}
         style={style.textInput}
-        placeholder={"Write here..."}
+        placeholder={COMMON_STRINGS.inputPlaceholder}
         placeholderTextColor={colors.text.secondary}
         blurOnSubmit={true}
         returnKeyType={"done"}
-        onSubmitEditing={() => console.log("cv")}
         multiline={true}
       />
       <FeedbackQuestionClearCta onPress={onClear} />

@@ -1,6 +1,6 @@
 import { StyleSheet, ViewStyle, TextStyle } from "react-native";
 import { colors } from "../../theme/colors";
-import { borderRadius } from "../../theme/borderRadius";
+import { typography } from "../../theme/typography";
 
 const SIZE = 16;
 
@@ -23,7 +23,7 @@ const createStyleSheet = () => {
     },
     checkIcon: {
       color: colors.text.inverted,
-      fontSize: 12,
+      fontSize: typography.size.extraSmall,
     },
     selectedContainer: {
       borderColor: colors.selection.selected,

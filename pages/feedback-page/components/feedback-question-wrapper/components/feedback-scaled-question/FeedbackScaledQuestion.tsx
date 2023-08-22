@@ -11,13 +11,13 @@ import { style } from "./styles";
 
 interface FeedbackScaledQuestionProps {
   question: ScaledChoiceQuestionModel;
-  markQuestionAsDone: (question: QuestionModel) => void;
-  markQuestionAsUnDone: (question: QuestionModel) => void;
+  markQuestionAsCompleted: (question: QuestionModel) => void;
+  markQuestionAsNotCompleted: (question: QuestionModel) => void;
 }
 const FeedbackScaledQuestion = React.forwardRef<
   QuestionAnsweredRef,
   FeedbackScaledQuestionProps
->(({ question, markQuestionAsDone, markQuestionAsUnDone }, ref) => {
+>(({ question, markQuestionAsCompleted, markQuestionAsNotCompleted }, ref) => {
   // A single answer is required, so use directly the answer
   // model for scaled choice question
   const [selectedAnswer, setSelectedAnswer] =
@@ -26,7 +26,7 @@ const FeedbackScaledQuestion = React.forwardRef<
   // Used when the user taps the clear selection button
   const onClear = () => {
     setSelectedAnswer(undefined);
-    markQuestionAsUnDone(question);
+    markQuestionAsNotCompleted(question);
   };
 
   // Use imperative handling to update the source of truth in the parent
@@ -52,7 +52,7 @@ const FeedbackScaledQuestion = React.forwardRef<
     // On press, update the state and mark the question as done
     const onPress = () => {
       setSelectedAnswer(answer);
-      markQuestionAsDone(question);
+      markQuestionAsCompleted(question);
     };
 
     return (

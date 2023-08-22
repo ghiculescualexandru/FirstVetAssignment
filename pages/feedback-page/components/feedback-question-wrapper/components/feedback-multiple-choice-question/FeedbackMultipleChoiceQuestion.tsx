@@ -1,25 +1,24 @@
-import { View, Text, TouchableWithoutFeedback } from "react-native";
 import React from "react";
+import { View } from "react-native";
+import { style } from "./styles";
 import {
-  MultipleChoiceQuestionAnsweredModel,
   MultipleChoiceQuestionModel,
   MultipleChoiceQuestionAnswerModel,
   QuestionModel,
 } from "../../../../../../models/question.models";
+import { QuestionAnsweredRef } from "../../../../utils/interfaces";
 import FeedbackQuestionClearCta from "../../../feedback-question-clear-cta/FeedbackQuestionClearCta";
 import SelectableRow from "../../../../../../components/selectable-row/SelectableRow";
-import { style } from "./styles";
-import { QuestionAnsweredRef } from "../../../../utils/interfaces";
 
 interface FeedbackMultipleChoiceQuestionProps {
   question: MultipleChoiceQuestionModel;
-  markQuestionAsDone: (question: QuestionModel) => void;
-  markQuestionAsUnDone: (question: QuestionModel) => void;
+  markQuestionAsCompleted: (question: QuestionModel) => void;
+  markQuestionAsNotCompleted: (question: QuestionModel) => void;
 }
 const FeedbackMultipleChoiceQuestion = React.forwardRef<
   QuestionAnsweredRef,
   FeedbackMultipleChoiceQuestionProps
->(({ question, markQuestionAsDone, markQuestionAsUnDone }, ref) => {
+>(({ question, markQuestionAsCompleted, markQuestionAsNotCompleted }, ref) => {
   // A single answer is required, so use directly the answer
   // model for single choice question
   const [selectedAnswer, setSelectedAnswer] =
@@ -28,7 +27,7 @@ const FeedbackMultipleChoiceQuestion = React.forwardRef<
   // Used when the user taps the clear selection button
   const onClear = () => {
     setSelectedAnswer(undefined);
-    markQuestionAsUnDone(question);
+    markQuestionAsNotCompleted(question);
   };
 
   // Use imperative handling to update the source of truth in the parent
@@ -66,22 +65,19 @@ const FeedbackMultipleChoiceQuestion = React.forwardRef<
             filteredSelectedAnswers && filteredSelectedAnswers?.length > 0
               ? [...filteredSelectedAnswers]
               : undefined;
-          // Mark the question as undone
-          if (
-            newSelectedAnswers === undefined ||
-            newSelectedAnswers.length === 0
-          ) {
-            markQuestionAsUnDone(question);
+          // Mark the question as undone, it was the last question
+          if (newSelectedAnswers === undefined) {
+            markQuestionAsNotCompleted(question);
           }
-
+          // Return the updated state
           return newSelectedAnswers;
         });
       } else {
         // Add the new response if not selected
         setSelectedAnswer((prevSelectedAnswers) => {
           // Mark the question as done
-          markQuestionAsDone(question);
-
+          markQuestionAsCompleted(question);
+          // Return the updated state based on the previous one
           return prevSelectedAnswers
             ? [...prevSelectedAnswers, answer]
             : [answer];

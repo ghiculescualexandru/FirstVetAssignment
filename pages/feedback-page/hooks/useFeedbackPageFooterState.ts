@@ -22,7 +22,7 @@ export const useFeedbackPageFooterState = ({
   };
 
   // Marks a question as done, by id
-  const markQuestionAsDone = (question: QuestionModel) => {
+  const markQuestionAsCompleted = (question: QuestionModel) => {
     if (completedQuestionsByIdRef.current[question.questionId]) {
       return;
     }
@@ -38,7 +38,7 @@ export const useFeedbackPageFooterState = ({
   };
 
   // Marks a question as not done, by id
-  const markQuestionAsUnDone = (question: QuestionModel) => {
+  const markQuestionAsNotCompleted = (question: QuestionModel) => {
     if (!completedQuestionsByIdRef.current[question.questionId]) {
       return;
     }
@@ -55,7 +55,7 @@ export const useFeedbackPageFooterState = ({
   return {
     buttonState,
     updateButtonState,
-    markQuestionAsDone,
-    markQuestionAsUnDone,
+    markQuestionAsCompleted,
+    markQuestionAsNotCompleted,
   };
 };

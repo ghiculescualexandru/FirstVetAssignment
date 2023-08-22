@@ -2,6 +2,7 @@ import React from "react";
 import { TouchableHighlight, View, Text } from "react-native";
 import { BaseButton } from "../../../../components/base-button/BaseButton";
 import { COMMON_STRINGS } from "../../../../strings/strings.common";
+import { colors } from "../../../../theme/colors";
 import { ButtonStatus } from "../../../../types/global.types";
 import { style } from "./styles";
 
@@ -28,7 +29,7 @@ const FeedbackFooter = ({
     <TouchableHighlight
       onPress={onResetPress}
       style={style.resetButtonContainer}
-      underlayColor={"transparent"}
+      underlayColor={colors.transparent}
     >
       <Text style={style.resetButtonText}>{COMMON_STRINGS.reset}</Text>
     </TouchableHighlight>

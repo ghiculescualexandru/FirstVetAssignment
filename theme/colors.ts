@@ -1,6 +1,7 @@
 // If i have time, add light and dark themes
 // and also a trigger somewhere to switch between theme
 export const colors = {
+  transparent: "transparent",
   surfaces: {
     underground: "#e9eaf2",
   },

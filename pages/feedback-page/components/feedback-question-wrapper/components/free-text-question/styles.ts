@@ -3,6 +3,8 @@ import { spacing } from "../../../../../../theme/spacing";
 import { colors } from "../../../../../../theme/colors";
 import { borderRadius } from "../../../../../../theme/borderRadius";
 
+const INPUT_HEIGHT = 128;
+
 interface Style {
   textInput: TextStyle;
 }
@@ -17,7 +19,7 @@ const createStyleSheet = () => {
       paddingTop: spacing.xs,
       paddingHorizontal: spacing.xs,
       paddingBottom: spacing.xs,
-      height: 128,
+      height: INPUT_HEIGHT,
       textAlignVertical: "top",
       marginBottom: spacing.m,
     },

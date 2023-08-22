@@ -8,7 +8,7 @@ import BaseCard from "../../components/base-card/BaseCard";
 import { BaseButton } from "../../components/base-button/BaseButton";
 import * as QuestionService from "../../services/question.service";
 import { normalizeQuestionsAnsweredToApi } from "../../utils/question.utils";
-import { RequestStatus } from "../../types/global.types";
+import { ButtonStatus } from "../../types/global.types";
 import { COMMON_STRINGS } from "../../strings/strings.common";
 
 const FeedbackRecapPage = ({
@@ -17,13 +17,12 @@ const FeedbackRecapPage = ({
 }: NativeStackScreenProps<RootStackParamList, "FeedbackRecap">) => {
   const questionsAnswered = route.params.questionsAnswered;
 
-  const [requestStatus, setRequestStatus] = React.useState<
-    RequestStatus | undefined
-  >(undefined);
+  const [buttonStatus, setButtonStatus] =
+    React.useState<ButtonStatus>("enabled");
 
   const onFinish = () => {
-    // Update request status to display loading in the footer
-    setRequestStatus("loading");
+    // Update button status to display loading in the footer
+    setButtonStatus("loading");
     // Normalize data to send for api
     const answersToSend = normalizeQuestionsAnsweredToApi(questionsAnswered);
     // Send data to server
@@ -35,7 +34,7 @@ const FeedbackRecapPage = ({
         navigation.popToTop();
       })
       .catch(() => {
-        setRequestStatus(undefined);
+        setButtonStatus("enabled");
         Alert.alert("Something went wrong");
       });
   };
@@ -74,15 +73,15 @@ const FeedbackRecapPage = ({
   };
 
   const listHeader = (
-    <Text style={style.headerText}>{COMMON_STRINGS.finish}</Text>
+    <Text style={style.headerText}>{COMMON_STRINGS.finishInfo}</Text>
   );
 
   const listFooter = (
     <BaseButton
       containerStyle={style.buttonContainer}
-      text={"Finish"}
+      text={COMMON_STRINGS.finish}
       onPress={onFinish}
-      status={requestStatus === "loading" ? "loading" : "enabled"}
+      status={buttonStatus}
     />
   );
 

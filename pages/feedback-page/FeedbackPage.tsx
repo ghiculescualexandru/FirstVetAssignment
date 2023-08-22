@@ -24,19 +24,21 @@ const FeedbackPage = ({
     id: route.params.id,
   });
 
-  const { buttonState, markQuestionAsDone, markQuestionAsUnDone } =
+  const { buttonState, markQuestionAsCompleted, markQuestionAsNotCompleted } =
     useFeedbackPageFooterState({ numberOfQuestions: questions.length });
 
   const onContinuePress = () => {
+    // Get the questions answers
     const questionsAnswered = getQuestionsAnsweredData();
+    // Navigate to the recap page, while passing the answers
     navigation.navigate("FeedbackRecap", { questionsAnswered });
   };
 
   const renderListItem = ({ item }: { item: QuestionModel }) => {
     return (
       <FeedbackQuestionWrapper
-        markQuestionAsDone={markQuestionAsDone}
-        markQuestionAsUnDone={markQuestionAsUnDone}
+        markQuestionAsCompleted={markQuestionAsCompleted}
+        markQuestionAsNotCompleted={markQuestionAsNotCompleted}
         question={item}
         questionRef={questionsAnswered[item.questionId]}
       />

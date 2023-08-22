@@ -1,7 +1,7 @@
 const http = require("http");
+const qs = require("querystring");
 const hostname = "127.0.0.1";
 const port = 3000;
-const qs = require("querystring");
 
 function sleep(ms) {
   return new Promise((resolve) => {
@@ -74,7 +74,7 @@ const MOCKS = [
     },
     {
       type: "multiple-choice",
-      question_id: 2,
+      question_id: 3,
       question_text: "What were the reasons for consultation?",
       answers: [
         { id: 5, text: "My pet was having some troubles" },
@@ -85,19 +85,19 @@ const MOCKS = [
     },
     {
       type: "scaled-choice",
-      question_id: 3,
+      question_id: 4,
       question_text: "How would you rate the consultation?",
       answers: [1, 2, 3, 4, 5],
     },
     {
       type: "scaled-choice",
-      question_id: 3,
+      question_id: 5,
       question_text: "How happy was your pet after the consultation?",
       answers: [1, 2, 3, 4, 5],
     },
     {
       type: "free-text",
-      question_id: 4,
+      question_id: 6,
       question_text: "How did the consultation go (step by step)?",
     },
   ],
@@ -127,7 +127,7 @@ const MOCKS = [
     },
     {
       type: "multiple-choice",
-      question_id: 2,
+      question_id: 3,
       question_text: "What were the reasons for consultations?",
       answers: [
         { id: 5, text: "My pet was having some troubles" },
@@ -138,7 +138,7 @@ const MOCKS = [
     },
     {
       type: "scaled-choice",
-      question_id: 3,
+      question_id: 4,
       question_text: "How happy were you with previous veterinaries?",
       answers: [1, 2, 3, 4, 5],
     },

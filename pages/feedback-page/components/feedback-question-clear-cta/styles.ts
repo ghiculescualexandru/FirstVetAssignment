@@ -1,5 +1,6 @@
 import { StyleSheet, ViewStyle, TextStyle } from "react-native";
 import { spacing } from "../../../../theme/spacing";
+import { typography } from "../../../../theme/typography";
 
 interface Style {
   container: ViewStyle;
@@ -13,7 +14,7 @@ const createStyleSheet = () => {
       paddingHorizontal: spacing.xs,
     },
     text: {
-      fontSize: 12,
+      fontSize: typography.size.extraSmall,
     },
   });
 };
