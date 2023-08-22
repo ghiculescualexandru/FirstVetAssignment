@@ -9,6 +9,7 @@ import { BaseButton } from "../../components/base-button/BaseButton";
 import * as QuestionService from "../../services/question.service";
 import { normalizeQuestionsAnsweredToApi } from "../../utils/question.utils";
 import { RequestStatus } from "../../types/global.types";
+import { COMMON_STRINGS } from "../../strings/strings.common";
 
 const FeedbackRecapPage = ({
   route,
@@ -72,6 +73,10 @@ const FeedbackRecapPage = ({
     );
   };
 
+  const listHeader = (
+    <Text style={style.headerText}>{COMMON_STRINGS.finish}</Text>
+  );
+
   const listFooter = (
     <BaseButton
       containerStyle={style.buttonContainer}
@@ -86,6 +91,7 @@ const FeedbackRecapPage = ({
       contentContainerStyle={style.listContentContainer}
       data={questionsAnswered}
       renderItem={renderListItem}
+      ListHeaderComponent={listHeader}
       ListFooterComponent={listFooter}
     />
   );

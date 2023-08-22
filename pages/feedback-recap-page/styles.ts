@@ -7,6 +7,7 @@ interface Style {
   buttonContainer: ViewStyle;
   cardStyle: ViewStyle;
   questionText: TextStyle;
+  headerText: TextStyle;
 }
 
 const createStyleSheet = () => {
@@ -17,7 +18,6 @@ const createStyleSheet = () => {
       justifyContent: "center",
     },
     listContentContainer: {
-      paddingTop: spacing.l,
       paddingHorizontal: spacing.l,
       paddingBottom: 100,
     },
@@ -31,6 +31,10 @@ const createStyleSheet = () => {
     questionText: {
       fontSize: 20,
       marginBottom: spacing.xs,
+    },
+    headerText: {
+      fontSize: 24,
+      marginVertical: spacing.l,
     },
   });
 };

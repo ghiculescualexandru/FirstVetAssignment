@@ -15,8 +15,16 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomePage} />
-        <Stack.Screen name="Feedback" component={FeedbackPage} />
-        <Stack.Screen name="FeedbackRecap" component={FeedbackRecapPage} />
+        <Stack.Screen
+          name="Feedback"
+          component={FeedbackPage}
+          options={{ title: "Feedback" }}
+        />
+        <Stack.Screen
+          name="FeedbackRecap"
+          component={FeedbackRecapPage}
+          options={{ title: "Send" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
