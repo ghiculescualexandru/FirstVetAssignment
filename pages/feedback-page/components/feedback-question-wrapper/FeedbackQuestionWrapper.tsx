@@ -73,11 +73,13 @@ const FeedbackQuestionWrapper = ({
     </View>
   );
 
-  return (
+  // If the answer component is not defined, do not display the card at all
+  // eg: (if backend deployed a new type of question which frontend hasn't yet implemented)
+  return answersComponent ? (
     <View style={style.cardContainer}>
       <BaseCard>{questionComponent}</BaseCard>
     </View>
-  );
+  ) : null;
 };
 
 export default FeedbackQuestionWrapper;
