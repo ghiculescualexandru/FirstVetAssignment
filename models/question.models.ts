@@ -13,7 +13,7 @@ export interface SingleChoiceQuestionModel {
   answers: SingleChoiceQuestionAnswerModel[];
 }
 
-export interface SingleChoiceQuestionRef {
+export interface SingleChoiceQuestionAnswered {
   question?: SingleChoiceQuestionModel;
   selectedAnswer?: SingleChoiceQuestionAnswerModel;
 }
@@ -33,8 +33,7 @@ export interface MultipleChoiceQuestionModel {
   answers: MultipleChoiceQuestionAnswerModel[];
 }
 
-export interface MultipleChoiceQuestionRef {
-  // [TODO TO DO] delete if unused
+export interface MultipleChoiceQuestionAnswered {
   question?: MultipleChoiceQuestionModel;
   selectedAnswers?: MultipleChoiceQuestionAnswerModel[];
 }
@@ -51,7 +50,7 @@ export interface ScaledChoiceQuestionModel {
   answers: ScaledChoiceQuestionAnswerModel[];
 }
 
-export interface ScaledChoiceQuestionRef {
+export interface ScaledChoiceQuestionAnswered {
   question?: ScaledChoiceQuestionModel;
   selectedAnswer?: ScaledChoiceQuestionAnswerModel;
 }
@@ -67,7 +66,7 @@ export interface FreeTextQuestionModel {
   questionText: string;
 }
 
-export interface FreeTextQuestionRef {
+export interface FreeTextQuestionAnswered {
   question?: FreeTextQuestionModel;
   selectedAnswer?: FreeTextQuestionAnswerModel;
 }
@@ -81,11 +80,8 @@ export type QuestionModel =
   | ScaledChoiceQuestionModel
   | FreeTextQuestionModel;
 
-// [TODO] move this and all refs to utils right in the page
-// OR right on the question component
-// also rename this to AnsweredQuestionModel
-export type QuestionRef =
-  | SingleChoiceQuestionRef
-  | MultipleChoiceQuestionRef
-  | ScaledChoiceQuestionRef
-  | FreeTextQuestionRef;
+export type QuestionAnswered =
+  | SingleChoiceQuestionAnswered
+  | MultipleChoiceQuestionAnswered
+  | ScaledChoiceQuestionAnswered
+  | FreeTextQuestionAnswered;

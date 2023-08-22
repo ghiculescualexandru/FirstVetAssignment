@@ -4,7 +4,7 @@ import {
   QuestionModel,
   ScaledChoiceQuestionAnswerModel,
   ScaledChoiceQuestionModel,
-  ScaledChoiceQuestionRef,
+  ScaledChoiceQuestionAnswered,
 } from "../../../../../../models/question.models";
 
 interface FeedbackScaledQuestionProps {
@@ -13,7 +13,7 @@ interface FeedbackScaledQuestionProps {
   markQuestionAsUnDone: (question: QuestionModel) => void;
 }
 const FeedbackScaledQuestion = React.forwardRef<
-  ScaledChoiceQuestionRef,
+  ScaledChoiceQuestionAnswered,
   FeedbackScaledQuestionProps
 >(({ question, markQuestionAsDone, markQuestionAsUnDone }, ref) => {
   // A single answer is required, so use directly the answer

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableWithoutFeedback } from "react-native";
 import {
-  SingleChoiceQuestionRef,
+  SingleChoiceQuestionAnswered,
   SingleChoiceQuestionModel,
   SingleChoiceQuestionAnswerModel,
   QuestionModel,
@@ -14,7 +14,7 @@ interface FeedbackSingleChoiceQuestionProps {
   markQuestionAsUnDone: (question: QuestionModel) => void;
 }
 const FeedbackSingleChoiceQuestion = React.forwardRef<
-  SingleChoiceQuestionRef,
+  SingleChoiceQuestionAnswered,
   FeedbackSingleChoiceQuestionProps
 >(({ question, markQuestionAsDone, markQuestionAsUnDone }, ref) => {
   // A single answer is required, so use directly the answer

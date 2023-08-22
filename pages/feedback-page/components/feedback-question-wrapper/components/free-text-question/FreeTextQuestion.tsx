@@ -3,7 +3,7 @@ import { View, Text, TextInput } from "react-native";
 import {
   FreeTextQuestionAnswerModel,
   FreeTextQuestionModel,
-  FreeTextQuestionRef,
+  FreeTextQuestionAnswered,
 } from "../../../../../../models/question.models";
 
 interface FreeTextQuestionProps {
@@ -12,7 +12,7 @@ interface FreeTextQuestionProps {
   markQuestionAsUnDone: (question: FreeTextQuestionModel) => void;
 }
 const FreeTextQuestion = React.forwardRef<
-  FreeTextQuestionRef,
+  FreeTextQuestionAnswered,
   FreeTextQuestionProps
 >(({ question, markQuestionAsDone, markQuestionAsUnDone }, ref) => {
   // A single answer is required, so use directly the answer
