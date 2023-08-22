@@ -7,7 +7,7 @@ import {
   SingleChoiceQuestionAnswerModel,
   QuestionModel,
 } from "../../../../../../models/question.models";
-import FeedbackQuestionClearCta from "../feedback-question-clear-cta/FeedbackQuestionClearCta";
+import FeedbackQuestionClearCta from "../../../feedback-question-clear-cta/FeedbackQuestionClearCta";
 import { style } from "./styles";
 
 interface FeedbackSingleChoiceQuestionProps {

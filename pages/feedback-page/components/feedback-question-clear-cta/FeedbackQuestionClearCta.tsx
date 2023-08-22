@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableWithoutFeedback } from "react-native";
-import { COMMON_STRINGS } from "../../../../../../strings/strings.common";
+import { COMMON_STRINGS } from "../../../../strings/strings.common";
 import { style } from "./styles";
 
 interface FeedbackQuestionClearCtaProps {

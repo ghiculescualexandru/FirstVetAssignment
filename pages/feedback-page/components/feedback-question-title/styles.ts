@@ -1,5 +1,6 @@
 import { StyleSheet, ViewStyle, TextStyle } from "react-native";
-import { spacing } from "../../../../../../theme/spacing";
+import { colors } from "../../../../theme/colors";
+import { spacing } from "../../../../theme/spacing";
 
 interface Style {
   container: ViewStyle;
@@ -9,11 +10,11 @@ interface Style {
 const createStyleSheet = () => {
   return StyleSheet.create<Style>({
     container: {
-      alignItems: "flex-end",
-      paddingHorizontal: spacing.xs,
+      marginBottom: spacing.m,
     },
     text: {
-      fontSize: 12,
+      color: colors.text.primary,
+      fontSize: 20,
     },
   });
 };

@@ -14,7 +14,7 @@ import FeedbackScaledQuestion from "./components/feedback-scaled-question/Feedba
 import FreeTextQuestion from "./components/free-text-question/FreeTextQuestion";
 import BaseCard from "../../../../components/base-card/BaseCard";
 import { style } from "./styles";
-import FeedbackQuestionTitle from "./components/feedback-question-title/FeedbackQuestionTitle";
+import FeedbackQuestionTitle from "../feedback-question-title/FeedbackQuestionTitle";
 
 interface FeedbackQuestionWrapperProps {
   question: QuestionModel;
