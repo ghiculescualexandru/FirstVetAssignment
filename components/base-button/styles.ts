@@ -1,6 +1,7 @@
 import { StyleSheet, ViewStyle, TextStyle } from "react-native";
 import { borderRadius } from "../../theme/borderRadius";
 import { colors } from "../../theme/colors";
+import { spacing } from "../../theme/spacing";
 
 const BUTTON_SIZE = {
   width: 200,
@@ -11,6 +12,7 @@ interface Style {
   container: ViewStyle;
   disabledContainer: ViewStyle;
   text: TextStyle;
+  leftComponent: ViewStyle;
 }
 
 const createStyleSheet = () => {
@@ -18,6 +20,7 @@ const createStyleSheet = () => {
     container: {
       width: BUTTON_SIZE.width,
       height: BUTTON_SIZE.height,
+      flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
       borderRadius: borderRadius.small,
@@ -29,6 +32,9 @@ const createStyleSheet = () => {
     text: {
       color: colors.text.inverted,
       fontSize: 20,
+    },
+    leftComponent: {
+      marginRight: spacing.xs,
     },
   });
 };

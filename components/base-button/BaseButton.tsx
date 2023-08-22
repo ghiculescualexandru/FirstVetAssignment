@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  ActivityIndicator,
   StyleProp,
   Text,
   TouchableHighlight,
@@ -22,13 +23,14 @@ export const BaseButton = ({
   status = "enabled",
   containerStyle,
 }: BaseButtonProps) => {
-  const { containerByStatus, disabled } = React.useMemo(() => {
+  const { containerByStatus, disabled, leftComponent } = React.useMemo(() => {
     return {
       containerByStatus:
         status === "disabled" || status === "loading"
           ? style.disabledContainer
           : undefined,
       disabled: status === "disabled" || status === "loading",
+      leftComponent: status === "loading" ? <ActivityIndicator /> : null,
     };
   }, [status]);
 
@@ -39,6 +41,9 @@ export const BaseButton = ({
       underlayColor={"transparent"}
     >
       <View style={[style.container, containerByStatus, containerStyle]}>
+        {leftComponent ? (
+          <View style={style.leftComponent}>{leftComponent}</View>
+        ) : null}
         <Text style={style.text}>{text}</Text>
       </View>
     </TouchableHighlight>
