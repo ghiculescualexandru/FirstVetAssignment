@@ -1,15 +1,12 @@
 import React from "react";
 import {
-  QuestionAnswered,
   QuestionModel,
+  QuestionAnswered,
 } from "../../../models/question.models";
 import { fetchFeedbackPageById } from "../../../services/question.service";
 import { RequestStatus } from "../../../types/global.types";
 import { normalizeQuestions } from "../../../utils/question.utils";
-import {
-  AnsweredQuestionRef,
-  FeedbackQuestionForwardedRef,
-} from "../utils/interfaces";
+import { AnsweredQuestionRef } from "../utils/interfaces";
 
 export const useFetchFeedbackPage = ({ id }: { id: number }) => {
   // The questions will be updated into a state, so that the page
@@ -65,6 +62,18 @@ export const useFetchFeedbackPage = ({ id }: { id: number }) => {
     });
   };
 
+  // Returns the questions and selected answers from the local source of truth
+  const getAnswersData = (): QuestionAnswered[] => {
+    return Object.values(questionsAnsweredRefs.current).map(
+      (questionAnsweredRef: React.RefObject<AnsweredQuestionRef>) => {
+        return {
+          question: questionAnsweredRef.current?.question,
+          selectedAnswer: questionAnsweredRef.current?.selectedAnswer,
+        } as QuestionAnswered;
+      }
+    );
+  };
+
   // Make the API call when hook is called
   React.useEffect(() => {
     fetchData();
@@ -75,5 +84,6 @@ export const useFetchFeedbackPage = ({ id }: { id: number }) => {
     requestStatus: results.requestStatus,
     questionsAnswered: questionsAnsweredRefs.current,
     resetAnswers,
+    getAnswersData,
   };
 };

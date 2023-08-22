@@ -35,7 +35,7 @@ export interface MultipleChoiceQuestionModel {
 
 export interface MultipleChoiceQuestionAnswered {
   question?: MultipleChoiceQuestionModel;
-  selectedAnswers?: MultipleChoiceQuestionAnswerModel[];
+  selectedAnswer?: MultipleChoiceQuestionAnswerModel[];
 }
 
 /**

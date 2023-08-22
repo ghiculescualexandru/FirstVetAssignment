@@ -14,10 +14,15 @@ const FeedbackPage = ({
   navigation,
   route,
 }: NativeStackScreenProps<RootStackParamList, "Feedback">) => {
-  const { questions, requestStatus, questionsAnswered, resetAnswers } =
-    useFetchFeedbackPage({
-      id: route.params.id,
-    });
+  const {
+    questions,
+    requestStatus,
+    questionsAnswered,
+    resetAnswers,
+    getAnswersData,
+  } = useFetchFeedbackPage({
+    id: route.params.id,
+  });
 
   const {
     buttonState,
@@ -25,6 +30,12 @@ const FeedbackPage = ({
     markQuestionAsDone,
     markQuestionAsUnDone,
   } = useFeedbackPageFooterState({ numberOfQuestions: questions.length });
+
+  const onContinuePress = () => {
+    const data = getAnswersData();
+    console.log(data);
+    navigation.navigate("FeedbackRecap", { answers: data });
+  };
 
   const renderListItem = ({ item }: { item: QuestionModel }) => {
     return (
@@ -81,9 +92,7 @@ const FeedbackPage = ({
     return (
       <FeedbackFooter
         state={buttonState}
-        onContinuePress={() => {
-          console.log(JSON.stringify(questionsAnswered, null, 1));
-        }}
+        onContinuePress={onContinuePress}
         onResetPress={resetAnswers}
       />
     );

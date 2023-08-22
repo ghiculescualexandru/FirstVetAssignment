@@ -15,10 +15,14 @@ import FreeTextQuestion from "./components/free-text-question/FreeTextQuestion";
 import BaseCard from "../../../../components/base-card/BaseCard";
 import { style } from "./styles";
 import FeedbackQuestionTitle from "../feedback-question-title/FeedbackQuestionTitle";
+import {
+  AnsweredQuestionRef,
+  FeedbackQuestionForwardedRef,
+} from "../../utils/interfaces";
 
 interface FeedbackQuestionWrapperProps {
   question: QuestionModel;
-  questionRef: React.RefObject<QuestionAnswered>;
+  questionRef: React.RefObject<AnsweredQuestionRef>;
   markQuestionAsDone: (question: QuestionModel) => void;
   markQuestionAsUnDone: (question: QuestionModel) => void;
 }
@@ -39,7 +43,9 @@ const FeedbackQuestionWrapper = ({
             markQuestionAsUnDone={markQuestionAsUnDone}
             // [TODO] If I have time, let's find a way to avoid explicit typing here.
             ref={
-              questionRef as React.ForwardedRef<MultipleChoiceQuestionAnswered>
+              questionRef as React.ForwardedRef<
+                MultipleChoiceQuestionAnswered & FeedbackQuestionForwardedRef
+              >
             }
           />
         );
@@ -50,7 +56,9 @@ const FeedbackQuestionWrapper = ({
             markQuestionAsDone={markQuestionAsDone}
             markQuestionAsUnDone={markQuestionAsUnDone}
             ref={
-              questionRef as React.ForwardedRef<SingleChoiceQuestionAnswered>
+              questionRef as React.ForwardedRef<
+                SingleChoiceQuestionAnswered & FeedbackQuestionForwardedRef
+              >
             }
           />
         );
@@ -61,7 +69,9 @@ const FeedbackQuestionWrapper = ({
             markQuestionAsDone={markQuestionAsDone}
             markQuestionAsUnDone={markQuestionAsUnDone}
             ref={
-              questionRef as React.ForwardedRef<ScaledChoiceQuestionAnswered>
+              questionRef as React.ForwardedRef<
+                ScaledChoiceQuestionAnswered & FeedbackQuestionForwardedRef
+              >
             }
           />
         );
@@ -71,7 +81,11 @@ const FeedbackQuestionWrapper = ({
             question={question}
             markQuestionAsDone={markQuestionAsDone}
             markQuestionAsUnDone={markQuestionAsUnDone}
-            ref={questionRef as React.ForwardedRef<FreeTextQuestionAnswered>}
+            ref={
+              questionRef as React.ForwardedRef<
+                FreeTextQuestionAnswered & FeedbackQuestionForwardedRef
+              >
+            }
           />
         );
       default:

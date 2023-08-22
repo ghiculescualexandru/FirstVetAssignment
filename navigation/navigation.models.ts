@@ -1,5 +1,7 @@
+import { QuestionAnswered } from "../models/question.models";
+
 export type RootStackParamList = {
   Home: undefined;
   Feedback: { id: number };
-  Details: undefined;
+  FeedbackRecap: { answers: QuestionAnswered[] };
 };

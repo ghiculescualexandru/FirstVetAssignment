@@ -22,12 +22,12 @@ const FeedbackMultipleChoiceQuestion = React.forwardRef<
 >(({ question, markQuestionAsDone, markQuestionAsUnDone }, ref) => {
   // A single answer is required, so use directly the answer
   // model for single choice question
-  const [selectedAnswers, setSelectedAnswers] =
+  const [selectedAnswer, setSelectedAnswer] =
     React.useState<MultipleChoiceQuestionAnswerModel[]>();
 
   // Used when the user taps the clear selection button
   const onClear = () => {
-    setSelectedAnswers(undefined);
+    setSelectedAnswer(undefined);
     markQuestionAsUnDone(question);
   };
 
@@ -35,11 +35,11 @@ const FeedbackMultipleChoiceQuestion = React.forwardRef<
   React.useImperativeHandle(
     ref,
     () => ({
-      selectedAnswers,
+      selectedAnswer,
       question,
       clearAnswers: onClear,
     }),
-    [selectedAnswers]
+    [selectedAnswer]
   );
 
   const renderAnswer = ({
@@ -50,12 +50,12 @@ const FeedbackMultipleChoiceQuestion = React.forwardRef<
     // Mark as selected if the answer id matches
     // the selected answer id
     const isSelected =
-      selectedAnswers?.find((val) => val.id === answer.id) !== undefined;
+      selectedAnswer?.find((val) => val.id === answer.id) !== undefined;
     // On press, update the state
     const onPress = () => {
       if (isSelected) {
         // Filter the pressed response if selected
-        setSelectedAnswers((prevSelectedAnswers) => {
+        setSelectedAnswer((prevSelectedAnswers) => {
           // Filter the response
           const filteredSelectedAnswers = prevSelectedAnswers?.filter(
             (prevSelectedAnswer) => prevSelectedAnswer.id !== answer.id
@@ -77,7 +77,7 @@ const FeedbackMultipleChoiceQuestion = React.forwardRef<
         });
       } else {
         // Add the new response if not selected
-        setSelectedAnswers((prevSelectedAnswers) => {
+        setSelectedAnswer((prevSelectedAnswers) => {
           // Mark the question as done
           markQuestionAsDone(question);
 
