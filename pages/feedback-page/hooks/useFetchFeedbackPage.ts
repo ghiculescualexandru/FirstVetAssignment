@@ -3,10 +3,10 @@ import {
   QuestionModel,
   QuestionAnsweredModel,
 } from "../../../models/question.models";
-import { fetchFeedbackPageById } from "../../../services/question.service";
 import { RequestStatus } from "../../../types/global.types";
 import { normalizeQuestions } from "../../../utils/question.utils";
 import { QuestionAnsweredRef } from "../utils/interfaces";
+import * as QuestionService from "../../../services/question.service";
 
 export const useFetchFeedbackPage = ({ id }: { id: number }) => {
   // The questions will be updated into a state, so that the page
@@ -30,7 +30,7 @@ export const useFetchFeedbackPage = ({ id }: { id: number }) => {
   const fetchData = async () => {
     try {
       // Fetch the response for feedback page
-      const response = await fetchFeedbackPageById({ id });
+      const response = await QuestionService.fetchFeedbackPageById({ id });
       // Parse the field from the response
       const questions = response.questions;
       // Normalize data
@@ -63,10 +63,14 @@ export const useFetchFeedbackPage = ({ id }: { id: number }) => {
   };
 
   // Returns the questions and selected answers from the local source of truth
-  const getAnswersData = (): QuestionAnsweredModel[] => {
+  const getQuestionsAnsweredData = (): QuestionAnsweredModel[] => {
     return Object.values(questionsAnsweredRefs.current).map(
       (questionAnsweredRef) =>
-        questionAnsweredRef.current as QuestionAnsweredModel
+        ({
+          question: questionAnsweredRef.current?.question,
+          selectedAnswer: questionAnsweredRef.current?.selectedAnswer,
+          type: questionAnsweredRef.current?.type,
+        } as QuestionAnsweredModel)
     );
   };
 
@@ -80,6 +84,6 @@ export const useFetchFeedbackPage = ({ id }: { id: number }) => {
     requestStatus: results.requestStatus,
     questionsAnswered: questionsAnsweredRefs.current,
     resetAnswers,
-    getAnswersData,
+    getQuestionsAnsweredData,
   };
 };

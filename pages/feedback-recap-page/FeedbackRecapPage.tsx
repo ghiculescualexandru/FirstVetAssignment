@@ -1,21 +1,42 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, Alert } from "react-native";
 import { RootStackParamList } from "../../navigation/navigation.models";
 import { style } from "./styles";
 import { QuestionAnsweredModel } from "../../models/question.models";
 import BaseCard from "../../components/base-card/BaseCard";
 import { BaseButton } from "../../components/base-button/BaseButton";
+import * as QuestionService from "../../services/question.service";
+import { normalizeQuestionsAnsweredToApi } from "../../utils/question.utils";
+import { RequestStatus } from "../../types/global.types";
 
 const FeedbackRecapPage = ({
   route,
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "FeedbackRecap">) => {
-  const answers = route.params.answers;
+  const questionsAnswered = route.params.questionsAnswered;
+
+  const [requestStatus, setRequestStatus] = React.useState<
+    RequestStatus | undefined
+  >(undefined);
 
   const onFinish = () => {
-    // [TODO] Send items to backend
-    navigation.popToTop();
+    // Update request status to display loading in the footer
+    setRequestStatus("loading");
+    // Normalize data to send for api
+    const answersToSend = normalizeQuestionsAnsweredToApi(questionsAnswered);
+    // Send data to server
+    QuestionService.sendFeedbackAnswers({
+      id: 0,
+      answersToSend,
+    })
+      .then(() => {
+        navigation.popToTop();
+      })
+      .catch(() => {
+        setRequestStatus(undefined);
+        Alert.alert("Something went wrong");
+      });
   };
 
   const getAnswerByQuestion = (item: QuestionAnsweredModel) => {
@@ -26,7 +47,7 @@ const FeedbackRecapPage = ({
         return item.selectedAnswer?.map(
           (value, index) =>
             // Concatenate the checked symbol with the text and
-            // add newline for all items, unless is the last item
+            // add newline for all items, unless is the last
             `✓ ${value.text} ${
               index !== (item.selectedAnswer?.length ?? 0) - 1 ? "\n" : ""
             }`
@@ -56,13 +77,14 @@ const FeedbackRecapPage = ({
       containerStyle={style.buttonContainer}
       text={"Finish"}
       onPress={onFinish}
+      status={requestStatus === "loading" ? "loading" : "enabled"}
     />
   );
 
   return (
     <FlatList
       contentContainerStyle={style.listContentContainer}
-      data={answers}
+      data={questionsAnswered}
       renderItem={renderListItem}
       ListFooterComponent={listFooter}
     />

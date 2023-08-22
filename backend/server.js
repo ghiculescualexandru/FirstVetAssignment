@@ -1,6 +1,7 @@
 const http = require("http");
 const hostname = "127.0.0.1";
 const port = 3000;
+const qs = require("querystring");
 
 function sleep(ms) {
   return new Promise((resolve) => {
@@ -15,18 +16,30 @@ const server = http.createServer((req, res) => {
 
   // Just to simulate request loading
   sleep(2000).finally(() => {
-    if (MOCKS[id]) {
-      console.log(req.url);
+    if (req.method === "GET") {
+      if (MOCKS[id]) {
+        console.log(req.url);
 
-      const responseData = {
-        questions: JSON.stringify(MOCKS[id]),
-      };
+        const responseData = {
+          questions: JSON.stringify(MOCKS[id]),
+        };
 
-      const jsonContent = JSON.stringify(responseData);
-      res.end(jsonContent);
-    } else {
+        const jsonContent = JSON.stringify(responseData);
+        res.end(jsonContent);
+      } else {
+        res.statusCode = 200;
+        res.end("404...We couldn't find what you are looking for.");
+      }
+    } else if (req.method === "POST") {
+      let body = "";
+      req.on("data", function (data) {
+        body += data;
+      });
       res.statusCode = 200;
-      res.end("404...We couldn't find what you are looking for.");
+      req.on("end", () => {
+        console.log(JSON.stringify(qs.parse(body)));
+      });
+      res.end();
     }
   });
 });

@@ -55,3 +55,20 @@ export type QuestionApiResponse =
 export interface FeedbackPageApiResponse {
   questions: QuestionApiResponse[];
 }
+
+/**
+ * Model for an answer that will be send to server
+ */
+export interface FeedbackAnswerToApi {
+  question_id: number;
+  question_text: string;
+  answers_texts: string;
+}
+
+/**
+ * Model for the whole feedback response that will be send to server
+ */
+export interface FeedbackResponseToApi {
+  id: number;
+  answers: FeedbackAnswerToApi[];
+}

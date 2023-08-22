@@ -1,5 +1,12 @@
-import { QuestionApiResponse } from "../models/api.models";
-import { QuestionModel } from "../models/question.models";
+import {
+  FeedbackAnswerToApi,
+  FeedbackResponseToApi,
+  QuestionApiResponse,
+} from "../models/api.models";
+import {
+  QuestionAnsweredModel,
+  QuestionModel,
+} from "../models/question.models";
 
 const normalizeQuestionAnswers = (question: QuestionApiResponse) => {
   switch (question.type) {
@@ -38,4 +45,22 @@ export const normalizeQuestions = (
   questions: QuestionApiResponse[]
 ): QuestionModel[] => {
   return questions.map(normalizeQuestion);
+};
+
+export const normalizeQuestionsAnsweredToApi = (
+  questionsAnswered: QuestionAnsweredModel[]
+): FeedbackAnswerToApi[] => {
+  return questionsAnswered.reduce((result, questionAnswered) => {
+    if (questionAnswered.question && questionAnswered.selectedAnswer) {
+      const newApiAnswer = {
+        question_id: questionAnswered.question?.questionId,
+        question_text: questionAnswered.question?.questionText,
+        answers_texts: JSON.stringify(questionAnswered.selectedAnswer),
+      };
+
+      return [...result, newApiAnswer];
+    }
+
+    return result;
+  }, [] as FeedbackAnswerToApi[]);
 };

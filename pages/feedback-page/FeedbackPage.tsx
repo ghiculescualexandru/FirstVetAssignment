@@ -19,7 +19,7 @@ const FeedbackPage = ({
     requestStatus,
     questionsAnswered,
     resetAnswers,
-    getAnswersData,
+    getQuestionsAnsweredData,
   } = useFetchFeedbackPage({
     id: route.params.id,
   });
@@ -28,8 +28,8 @@ const FeedbackPage = ({
     useFeedbackPageFooterState({ numberOfQuestions: questions.length });
 
   const onContinuePress = () => {
-    const answers = getAnswersData();
-    navigation.navigate("FeedbackRecap", { answers });
+    const questionsAnswered = getQuestionsAnsweredData();
+    navigation.navigate("FeedbackRecap", { questionsAnswered });
   };
 
   const renderListItem = ({ item }: { item: QuestionModel }) => {
