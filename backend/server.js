@@ -2,24 +2,33 @@ const http = require("http");
 const hostname = "127.0.0.1";
 const port = 3000;
 
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 const server = http.createServer((req, res) => {
   const url = req.url;
   const idIndexInUrl = url.indexOf("/") + 1;
   const id = parseInt(url.slice(idIndexInUrl));
 
-  if (MOCKS[id]) {
-    console.log(req.url);
+  // Just to simulate request loading
+  sleep(2000).finally(() => {
+    if (MOCKS[id]) {
+      console.log(req.url);
 
-    const responseData = {
-      questions: JSON.stringify(MOCKS[id]),
-    };
+      const responseData = {
+        questions: JSON.stringify(MOCKS[id]),
+      };
 
-    const jsonContent = JSON.stringify(responseData);
-    res.end(jsonContent);
-  } else {
-    res.statusCode = 200;
-    res.end("404...We couldn't find what you are looking for.");
-  }
+      const jsonContent = JSON.stringify(responseData);
+      res.end(jsonContent);
+    } else {
+      res.statusCode = 200;
+      res.end("404...We couldn't find what you are looking for.");
+    }
+  });
 });
 
 server.listen(port, hostname, () => {

@@ -1,7 +1,9 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
 import { BaseButton } from "../../components/base-button/BaseButton";
 import { QuestionModel, QuestionAnswered } from "../../models/question.models";
+import { RootStackParamList } from "../../navigation/navigation.models";
 import { fetchFeedbackPageById } from "../../services/question.service";
 import FeedbackFooter from "./components/feedback-footer/FeedbackFooter";
 import FeedbackQuestionWrapper from "./components/feedback-question-wrapper/FeedbackQuestionWrapper";
@@ -9,9 +11,12 @@ import { useFeedbackPageFooterState } from "./hooks/useFeedbackPageFooterState";
 import { useFetchFeedbackPage } from "./hooks/useFetchFeedbackPage";
 import { style } from "./styles";
 
-const FeedbackPage = ({ navigation }: { navigation: any }) => {
+const FeedbackPage = ({
+  navigation,
+  route,
+}: NativeStackScreenProps<RootStackParamList, "Feedback">) => {
   const { questions, questionsAnswered, resetAnswers } = useFetchFeedbackPage({
-    id: 1,
+    id: route.params.id,
   });
 
   const {

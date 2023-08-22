@@ -1,5 +1,11 @@
 import React from "react";
-import { Text, TouchableHighlight, View } from "react-native";
+import {
+  StyleProp,
+  Text,
+  TouchableHighlight,
+  View,
+  ViewStyle,
+} from "react-native";
 import { ButtonStatus } from "../../types/global.types";
 import { style } from "./styles";
 
@@ -7,12 +13,14 @@ interface BaseButtonProps {
   onPress: () => void;
   text: string;
   status?: ButtonStatus;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 export const BaseButton = ({
   onPress,
   text,
   status = "enabled",
+  containerStyle,
 }: BaseButtonProps) => {
   const { containerByStatus, disabled } = React.useMemo(() => {
     return {
@@ -30,7 +38,7 @@ export const BaseButton = ({
       disabled={disabled}
       underlayColor={"transparent"}
     >
-      <View style={[style.container, containerByStatus]}>
+      <View style={[style.container, containerByStatus, containerStyle]}>
         <Text style={style.text}>{text}</Text>
       </View>
     </TouchableHighlight>
