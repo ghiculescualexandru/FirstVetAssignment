@@ -37,6 +37,16 @@ const FeedbackPage = ({
     );
   };
 
+  const listHeader = React.useMemo(() => {
+    // Guard here, so we don't display the header
+    // if something went wrong
+    if (requestStatus !== "success" || questions.length === 0) {
+      return null;
+    }
+
+    return <Text style={style.headerText}>{COMMON_STRINGS.start}</Text>;
+  }, [requestStatus, questions]);
+
   const listEmpty = React.useMemo(() => {
     switch (requestStatus) {
       case "initial-loading":
@@ -84,6 +94,7 @@ const FeedbackPage = ({
       contentContainerStyle={style.listContentContainer}
       data={questions}
       renderItem={renderListItem}
+      ListHeaderComponent={listHeader}
       ListFooterComponent={listFooter}
       ListEmptyComponent={listEmpty}
       automaticallyAdjustKeyboardInsets={true}

@@ -6,6 +6,7 @@ interface Style {
   loadingContainer: ViewStyle;
   loadingIndicator: ViewStyle;
   loadingText: TextStyle;
+  headerText: TextStyle;
 }
 
 const createStyleSheet = () => {
@@ -24,6 +25,11 @@ const createStyleSheet = () => {
     loadingText: {
       marginTop: spacing.l,
       alignSelf: "center",
+    },
+    headerText: {
+      fontSize: 24,
+      marginVertical: spacing.l,
+      paddingHorizontal: spacing.l,
     },
   });
 };
